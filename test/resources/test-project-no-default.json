@@ -1,0 +1,65 @@
+{
+    "packageDirectories": [
+      {
+        "path":"deploy/pre/predestruct"
+      },
+      {
+        "path":"deploy/post/postdestruct"
+      },
+      {
+        "package": "d_trigger_framework",
+        "path": "d_trigger_framework",
+        "default": false,
+        "versionName": "v1.1.0",
+        "versionDescription": "Trigger Framework 1.1.0",
+        "versionNumber": "1.1.0.NEXT",
+        "dependencies": [
+          {
+            "package": "d_trigger_framework_contracts",
+            "versionNumber": "1.0.0.LATEST"
+          },
+          {
+            "package": "fflib-apex-mocks",
+            "versionNumber": "1.0.0.LATEST"
+          },
+          {
+            "package": "d_generic_apex",
+            "versionNumber": "1.4.0.LATEST"
+          },
+          {
+            "package": "d_exception_helper_contracts",
+            "versionNumber": "1.0.0.LATEST"
+          },
+          {
+            "package": "d_trigger_monitor"
+          },
+          {
+            "package": "d_utilities_contracts"
+          },
+          {
+            "package": "d_utilities",
+            "versionNumber": "1.0.0.LATEST"
+          }
+        ]
+      },
+      {
+        "path": "contracts/contracts"
+      },
+      {
+        "path": "mock_metadata"
+      }
+    ],
+    "packageAliases": {
+      "d_trigger_framework": "0Ho46000000001OCAQ",
+      "d_trigger_framework_contracts": "0Ho46000000001JCAQ",
+      "d_generic_apex": "0Ho460000004CB9CAM",
+      "fflib-apex-mocks": "0Ho46000000blJOCAY",
+      "d_exception_helper_contracts": "0Ho46000000001sCAA",
+      "d_trigger_monitor@1.0.0.3": "04t460000006MLsAAM",
+      "d_utilities_contracts@1.0.0.2": "04t46000001XaNvAAK",
+      "d_utilities": "0Ho46000000001YCAQ"
+    },
+    "namespace": "",
+    "sfdcLoginUrl": "https://login.salesforce.com",
+    "sourceApiVersion": "43.0"
+  }

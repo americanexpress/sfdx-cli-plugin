@@ -1,0 +1,10 @@
+{
+    "metadataComponentNodeMaps": [
+        {
+            "metadataType": "Workflow",
+            "componentType": "WorkflowAlert",
+            "xpath": "Workflow/alerts",
+            "filePath": "**/workflows/*.workflow"
+        }
+    ]
+}

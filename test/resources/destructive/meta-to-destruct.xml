@@ -1,0 +1,36 @@
+<Workflow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <alerts>
+        <fullName>Band_35_Case_Approval</fullName>
+        <description>Band 35 Case Approval</description>
+        <protected>false</protected>
+        <recipients>
+            <recipient>MSE_Business_Manager</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <recipient>MSE_Team_Manager</recipient>
+            <type>role</type>
+        </recipients>
+        <recipients>
+            <field>Case_Submitted_By__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <recipients>
+            <field>MSE_Reviewer__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>MSE_Request_Email_Templates/Band_35_Case_Approval</template>
+    </alerts>
+    <alerts>
+        <fullName>Band_35_Case_Update_Request</fullName>
+        <description>Band 35 Case Update Request</description>
+        <protected>false</protected>
+        <recipients>
+            <field>Case_Submitted_By__c</field>
+            <type>userLookup</type>
+        </recipients>
+        <senderType>CurrentUser</senderType>
+        <template>MSE_Request_Email_Templates/Band_35_Case_Update_Request</template>
+    </alerts>
+</Workflow>

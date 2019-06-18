@@ -1,0 +1,11 @@
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <types>
+    <member>ApplicationLogTestData</member>
+    <name>ApexClass</name>
+  </types>
+  <types>
+    <member>Business_Unit__c.Active__c</member>
+    <member>Campaign__c.Previous_Resting_Campaign_IDs__c</member>
+    <name>CustomField</name>
+  </types>
+</Package>

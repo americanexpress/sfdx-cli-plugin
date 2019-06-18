@@ -1,0 +1,8 @@
+node_modules/*
+.nyc_output/*
+.vscode/settings.json
+.vscode
+.data
+test/resources/*.db
+lib/*
+yarn-error.log

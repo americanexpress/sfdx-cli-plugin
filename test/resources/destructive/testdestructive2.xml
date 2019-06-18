@@ -1,0 +1,15 @@
+<Package xmlns="http://soap.sforce.com/2006/04/metadata">
+  <types>
+    <member>ApplicationLogTestData</member>
+    <name>ApexClass</name>
+  </types>
+  <types>
+    <member>CustomObjectA.FieldOne</member>
+    <member>CustomObjectA.FieldTwo</member>
+    <name>CustomField</name>
+  </types>
+  <types>
+    <member>MyWorkflow</member>
+    <name>Workflow</name>
+  </types>
+</Package>
