@@ -12,9 +12,16 @@ As Salesforce engineers developing applications with DX, we created the SFDX CLI
   * Deploying with predestruct and postdestruct operations
   * Executing queries via the tooling API
 
-Our plugin was initially created created using the plugin-generator, itself a plugin that comes bundled with the CLI installation. The plugin generator is based on Heroku's open-source CLI framework, [OCLIF](https://oclif.io).
+Our plugin was initially created using the plugin-generator, itself a plugin that comes bundled with the CLI installation. The plugin generator is based on Heroku's open-source CLI framework, [OCLIF](https://oclif.io).
 
 If you want to create your own plugin from scratch, you can get started [here](https://developer.salesforce.com/blogs/2018/05/create-your-first-salesforce-cli-plugin.html). However, we'd be delighted if you decided to collaborate with us to make this plugin even better!
+
+Intalling Dependencies
+----------------------
+Use the following command to install all dependencies upon initial checkout.
+```
+yarn install
+```
 
 Running Tests
 -------------
