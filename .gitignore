@@ -6,3 +6,4 @@ node_modules/*
 test/resources/*.db
 lib/*
 yarn-error.log
+yarn-lock
