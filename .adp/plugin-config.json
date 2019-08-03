@@ -1,7 +1,7 @@
 {
     "commandOverrides": [
         {"command": "adp:source:deploy", "overrideWith": {
-            "commandString": "$REPO/sfdx-cli-plugin/resources/bash/build.sh",
+            "commandString": "$HOME/.epsf/dependencies/sfdx-cli-plugin/resources/bash/build.sh",
             "args": []}}
     ],
     "metadataTransforms": [

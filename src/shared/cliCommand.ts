@@ -88,7 +88,7 @@ export function hasOverride(commandFile: string, config) {
 }
 
 function fileToCommand(filePath: string): string {
-    return filePath.slice(filePath.indexOf('/adp/') + 1, filePath.indexOf('.')).replace(/\//g, ':');
+    return filePath.slice(filePath.indexOf('/adp/') + 1, filePath.lastIndexOf('.')).replace(/\//g, ':');
 }
 
 /**
