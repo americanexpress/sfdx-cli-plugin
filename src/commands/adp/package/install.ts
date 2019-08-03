@@ -100,7 +100,7 @@ export default class Install extends SfdxCommand {
             } else {
                 // Install or upgrade the package
                 this.ux.log(`Installing ${pkgVersion.name} v${pkgVersion.latestVersion} ${releasedStr}...`);
-                const installCmd = `sfdx force:package:install -p ${pkgVersion.id} -u ${username} --json`;
+                const installCmd = `sfdx force:package:install -r -p ${pkgVersion.id} -u ${username} --json`;
                 const installRespJson = childproc.execSync(installCmd, {encoding: 'utf8'});
                 const installResp = JSON.parse(installRespJson);
                 const requestId: string = installResp.result.Id;
