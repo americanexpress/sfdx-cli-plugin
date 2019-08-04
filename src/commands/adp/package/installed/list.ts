@@ -38,7 +38,7 @@ export default class List extends SfdxCommand {
         const includeParent = this.flags.allpackages;
         const username = this.org.getUsername();
         const alias = org.getAliasByUsername(username);
-        const forceLatest = this.flags.forcelatest;
+        const forceLatest = true;
 
         this.ux.startSpinner(chalk.gray('Retrieving package versions for the current project'));
         const projectJsonObj = await pkg.getProjectJson();
@@ -48,7 +48,6 @@ export default class List extends SfdxCommand {
                                 verbose: true,
                                 latestVersions: forceLatest
                             });
-        // const dependencies = await pkg.getDependencies(null, verbose, withParent, branch, false);
         this.ux.stopSpinner(chalk.gray('done.'));
 
         // TODO: Factor this out of the package commands and add to messages.
