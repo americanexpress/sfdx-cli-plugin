@@ -48,7 +48,7 @@ export function runAll(commands: CLICommand[], runner?) {
 export function run(cmd: CLICommand, runner?) {
     let commandStr = cmd.commandString;
 
-    commandStr = path.normalize(commandStr.replace('$REPO', process.env.REPO));
+    commandStr = path.normalize(commandStr.replace('$REPO', process.env.REPO).replace('~', process.env.HOME));
 
     if (cmd.encloseInQuotes) {
         commandStr = `"${commandStr}"`;
@@ -105,6 +105,8 @@ export function getOverride(commandFile: string, pluginConfig?): CLICommand {
         const configDirs = cfg.getConfigDirs();
         config = cfg.get(configDirs);
     }
+
+    console.log(config);
 
     let retVal: CLICommand;
     if (hasOverride(commandFile, config)) {

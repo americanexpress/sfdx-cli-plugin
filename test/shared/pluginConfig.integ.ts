@@ -43,13 +43,13 @@ describe('---------- pluginConfig INTEG ----------', () => {
 
         it('result contains config data and error message if local config file not found', () => {
             const configDirs = {localConfigDir: '../dummyproject',
-                                globalConfigDir: `${process.env.REPO}/sfdx-cli-plugin/test/resources/.adp`};
+                                globalConfigDir: `${process.env.REPO}/sfdx-cli-plugin/test/resources/.epsf`};
             const result = cfg.get(configDirs);
             expect(result.errors[0]).to.equal('Configuration file not found: ../dummyproject/plugin-config.json');
         });
 
         it ('result contains config data and error message if global config file not found', () => {
-            const configDirs = {localConfigDir: `${process.env.REPO}/sfdx-cli-plugin/.adp`,
+            const configDirs = {localConfigDir: `${process.env.REPO}/sfdx-cli-plugin/.epsf`,
                                 globalConfigDir: '../dummyglobal'};
             const result = cfg.get(configDirs);
             expect(result.errors[0]).to.equal('Configuration file not found: ../dummyglobal/plugin-config.json');

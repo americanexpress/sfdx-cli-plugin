@@ -44,48 +44,48 @@ processFlows() {
 if git diff-index --quiet HEAD --; then
 
     # If the main temp deploy directory does not exist create it
-    if [ ! -d ".adp/temp/src" ]; then
-        mkdir -p .adp/temp/src
+    if [ ! -d ".epsf/temp/src" ]; then
+        mkdir -p .epsf/temp/src
     fi
 
     # Convert the source
     if [ -d "force-app/main/default" ]; then
         processFlows "force-app/main/default/flows"
-        sfdx force:source:convert -r force-app/main/default -d .adp/temp/src
+        sfdx force:source:convert -r force-app/main/default -d .epsf/temp/src
     else
-        echo -e '<?xml version="1.0" encoding="UTF-8"?>\n<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n<version>45.0</version>\n</Package>' > .adp/temp/src/package.xml
+        echo -e '<?xml version="1.0" encoding="UTF-8"?>\n<Package xmlns="http://soap.sforce.com/2006/04/metadata">\n<version>45.0</version>\n</Package>' > .epsf/temp/src/package.xml
     fi
 
     # Convert the predestruct
     if [ -d "deploy/pre/predestruct/main/default" ]; then
-        mkdir -p .adp/temp/predestruct
+        mkdir -p .epsf/temp/predestruct
         cd deploy/pre/
         # If there are flows to be delted we need to ensure they are both inactive (via flowDefinition active version being set to 0)
         # and by including the version to the end of the actual flow, in our case we always preserve 1 as the active version
         processFlows "predestruct/main/default/flows"
-        sfdx force:source:convert -r predestruct/ -d ../../.adp/temp/predestruct
-        mv ../../.adp/temp/predestruct/package.xml ../../.adp/temp/src/destructiveChangesPre.xml
-        sfdx adp:source:destructive:prepare -d ../../.adp/temp/predestruct -f ../../.adp/temp/src/destructiveChangesPre.xml
+        sfdx force:source:convert -r predestruct/ -d ../../.epsf/temp/predestruct
+        mv ../../.epsf/temp/predestruct/package.xml ../../.epsf/temp/src/destructiveChangesPre.xml
+        sfdx adp:source:destructive:prepare -d ../../.epsf/temp/predestruct -f ../../.epsf/temp/src/destructiveChangesPre.xml
         cd "$CURRENT_DIR"
     fi
 
     # Convert the postdestruct
     if [ -d "deploy/post/postdestruct/main/default/" ]; then
-        mkdir -p .adp/temp/postdestruct
+        mkdir -p .epsf/temp/postdestruct
         cd deploy/post
         # If there are flows to be delted we need to ensure they are both inactive (via flowDefinition active version being set to 0)
         # and by including the version to the end of the actual flow, in our case we always preserve 1 as the active version
         processFlows "postdestruct/main/default/flows"
-        sfdx force:source:convert -r postdestruct/ -d ../../.adp/temp/postdestruct
-        mv ../../.adp/temp/postdestruct/package.xml ../../.adp/temp/src/destructiveChangesPost.xml
-        sfdx adp:source:destructive:prepare -d ../../.adp/temp/postdestruct -f ../../.adp/temp/src/destructiveChangesPost.xml
+        sfdx force:source:convert -r postdestruct/ -d ../../.epsf/temp/postdestruct
+        mv ../../.epsf/temp/postdestruct/package.xml ../../.epsf/temp/src/destructiveChangesPost.xml
+        sfdx adp:source:destructive:prepare -d ../../.epsf/temp/postdestruct -f ../../.epsf/temp/src/destructiveChangesPost.xml
         cd "$CURRENT_DIR"
     fi
 
-    # Deploy the newly created payload .adp/temp/src if not in debug mode
+    # Deploy the newly created payload .epsf/temp/src if not in debug mode
     if [ "$DEBUG" != "true" ] && [ "$DEBUG" != "TRUE" ]; then
-        sfdx force:mdapi:deploy $TEST_LEVEL -w 60 -d .adp/temp/src --verbose -g $USER_NAME $CHECK_ONLY
-        # rm -r .adp/temp
+        sfdx force:mdapi:deploy $TEST_LEVEL -w 60 -d .epsf/temp/src --verbose -g $USER_NAME $CHECK_ONLY
+        # rm -r .epsf/temp
     else
         echo "Payload not deployed since DEBUG mode is on."
     fi

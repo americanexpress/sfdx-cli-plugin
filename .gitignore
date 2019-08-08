@@ -6,3 +6,5 @@ node_modules/*
 test/resources/*.db
 lib/*
 yarn-error.log
+plugin-config.json
+

@@ -35,8 +35,9 @@ export interface ConfigDirOpts {
  */
 export function getConfigDirs(opts?: ConfigDirOpts): PluginConfigDirs {
     const localHiddenDir: string = `${process.env.PWD}/${consts.HIDDEN_DIR_NAME_LOCAL}`;
-    const globalHiddenDir: string = `${process.env.HOME}/${consts.HIDDEN_DIR_NAME_GLOBAL}`;
-    const appConfigDir: string = path.normalize(`${process.env.REPO}/sfdx-cli-plugin/config`);
+    const pluginHome: string = __dirname.substring(0, __dirname.indexOf('sfdx-cli-plugin') + 'sfdx-cli-plugin'.length);
+    const globalHiddenDir: string = path.normalize(`${pluginHome}`);
+    const appConfigDir: string = path.normalize(`${pluginHome}/config`);
     let configDirs: PluginConfigDirs = {localConfigDir: localHiddenDir,
                                         globalConfigDir: globalHiddenDir,
                                         appConfigDir};
