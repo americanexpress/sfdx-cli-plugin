@@ -106,8 +106,6 @@ export function getOverride(commandFile: string, pluginConfig?): CLICommand {
         config = cfg.get(configDirs);
     }
 
-    console.log(config);
-
     let retVal: CLICommand;
     if (hasOverride(commandFile, config)) {
         retVal = config.commandOverrides.find(ovr => ovr.command === command).overrideWith;
