@@ -1,0 +1,49 @@
+{
+  "name": "http-call",
+  "description": "make http requests",
+  "version": "5.2.2",
+  "author": "Jeff Dickey @jdxcode",
+  "bugs": "https://github.com/heroku/http-call/issues",
+  "dependencies": {
+    "content-type": "^1.0.4",
+    "debug": "^3.1.0",
+    "is-retry-allowed": "^1.1.0",
+    "is-stream": "^1.1.0",
+    "tunnel-agent": "^0.6.0"
+  },
+  "devDependencies": {
+    "@heroku-cli/tslint": "^1.1.4",
+    "@types/content-type": "^1.1.2",
+    "@types/is-stream": "^1.1.0",
+    "@types/jest": "^23.3.1",
+    "@types/nock": "^9.3.0",
+    "@types/node": "^10.9.3",
+    "jest": "^23.5.0",
+    "nock": "^9.6.1",
+    "ts-jest": "^23.1.4",
+    "tslint": "^5.11.0",
+    "typescript": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "files": [
+    "lib"
+  ],
+  "homepage": "https://github.com/heroku/http-call",
+  "keywords": [
+    "http",
+    "request",
+    "rest"
+  ],
+  "license": "ISC",
+  "main": "lib/http.js",
+  "repository": "heroku/http-call",
+  "scripts": {
+    "prepare": "rm -rf lib && tsc",
+    "pretest": "tsc",
+    "posttest": "tslint -p .",
+    "test": "jest"
+  },
+  "types": "./lib/http.d.ts"
+}
