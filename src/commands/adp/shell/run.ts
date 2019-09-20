@@ -83,7 +83,7 @@ export function buildCommand(projectPath: string, flags): cli.CLICommand {
         }
     } else {
         // In DX project
-        const bashPath = `${projectPath}/${consts.HIDDEN_DIR_NAME_LOCAL}/bash`;
+        const bashPath = `${projectPath}/${consts.LOCAL_HIDDEN_DIR}/bash`;
         if (util.isNullOrUndefined(flags.file)) {
             // No file set
             scriptFile = `${bashPath}/build.sh`;

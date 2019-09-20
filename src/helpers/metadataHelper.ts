@@ -27,6 +27,7 @@ export interface MetadataComponentNodeMap {
 export function getMetadataComponentNodeMaps() {
     const configDirs = cfg.getConfigDirs();
     const appConfigDir = configDirs.appConfigDir;
+    console.log(appConfigDir);
     const configJson = cfg.getConfig(appConfigDir, 'appConfig.json');
     return configJson.metadataComponentNodeMaps;
 }

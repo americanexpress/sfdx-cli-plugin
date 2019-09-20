@@ -11,6 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import * as os from 'os';
 import * as path from 'path';
 import { isUndefined } from 'util';
 import * as consts from './constants';
@@ -34,22 +35,21 @@ export interface ConfigDirOpts {
  * @returns PluginConfigDirs object
  */
 export function getConfigDirs(opts?: ConfigDirOpts): PluginConfigDirs {
-    const localHiddenDir: string = `${process.env.PWD}/${consts.HIDDEN_DIR_NAME_LOCAL}`;
-    const pluginHome: string = __dirname.substring(0, __dirname.indexOf('sfdx-cli-plugin') + 'sfdx-cli-plugin'.length);
-    const globalHiddenDir: string = path.normalize(`${pluginHome}`);
-    const appConfigDir: string = path.normalize(`${pluginHome}/config`);
+    const localHiddenDir: string = `${process.env.PWD}/${consts.LOCAL_HIDDEN_DIR}`;
+    const globalConfigDir: string = path.normalize(`${os.homedir()}/${consts.GLOBAL_CONFIG_DIR}`);
+    const appConfigDir: string = path.normalize(`${globalConfigDir}/config`);
     let configDirs: PluginConfigDirs = {localConfigDir: localHiddenDir,
-                                        globalConfigDir: globalHiddenDir,
+                                        globalConfigDir,
                                         appConfigDir};
 
     if (opts) {
         if (!opts.localOnly && !opts.globalOnly || opts.localOnly && opts.globalOnly) {
             configDirs = {localConfigDir: localHiddenDir,
-                            globalConfigDir: globalHiddenDir};
+                            globalConfigDir};
         } else if (opts.localOnly) {
             configDirs = {localConfigDir: localHiddenDir};
         } else if (opts.globalOnly) {
-            configDirs = {globalConfigDir: globalHiddenDir};
+            configDirs = {globalConfigDir};
         }
     }
     return configDirs;

@@ -20,12 +20,12 @@ describe('---------- pluginConfig INTEG ----------', () => {
 
         it('returns merged global and local configs when no specific props specified', () => {
 
-            const globalConfigDir = `${process.env.HOME}/${consts.HIDDEN_DIR_NAME_GLOBAL}`;
+            const globalConfigDir = `${process.env.HOME}/${consts.GLOBAL_CONFIG_DIR}`;
             const projectDir = `${process.env.REPO}/sfdx-cli-plugin`;
             const configDirs = cfg.getConfigDirs();
             const result = cfg.get(configDirs);
             const globalConfigFile = `${globalConfigDir}/plugin-config.json`;
-            const projConfigFile = `${projectDir}/${consts.HIDDEN_DIR_NAME_LOCAL}`;
+            const projConfigFile = `${projectDir}/${consts.LOCAL_HIDDEN_DIR}`;
 
             expect(result.proxySettings, `${globalConfigFile}.proxySettings not found`).not.to.equal(undefined);
             expect(result.talendSettings, `${globalConfigFile}.talendSettings not found`).not.to.equal(undefined);

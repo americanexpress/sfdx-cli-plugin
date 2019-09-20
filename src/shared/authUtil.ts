@@ -41,12 +41,12 @@ export function createConnection(input?: ConnInfo): jsforce.Connection {
 }
 
 export function persistCredentials(credentials: AuthInfo) {
-    const filePath = `${process.env.HOME}/${consts.HIDDEN_DIR_NAME_GLOBAL}/${credentials.username}`;
+    const filePath = `${process.env.HOME}/${consts.GLOBAL_CONFIG_DIR}/${credentials.username}`;
     fileUtil.writeObjectToFile(filePath, credentials);
 }
 
 export function findConnection(username: string) {
-    const filePath = `${process.env.HOME}/${consts.HIDDEN_DIR_NAME_GLOBAL}/${username}`;
+    const filePath = `${process.env.HOME}/${consts.GLOBAL_CONFIG_DIR}/${username}`;
     const jsonString: string = fs.readFileSync(filePath, { encoding: 'utf-8' });
     const creds = JSON.parse(jsonString);
     const conn = new jsforce.Connection({

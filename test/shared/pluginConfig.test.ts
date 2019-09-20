@@ -87,8 +87,8 @@ describe('---------- pluginConfig UNIT ----------', () => {
         let globalHiddenDir: string;
 
         before('set local and global config directories', () => {
-            localHiddenDir = `${process.env.PWD}/${consts.HIDDEN_DIR_NAME_LOCAL}`;
-            globalHiddenDir = `${process.env.HOME}/${consts.HIDDEN_DIR_NAME_GLOBAL}`;
+            localHiddenDir = `${process.env.PWD}/${consts.LOCAL_HIDDEN_DIR}`;
+            globalHiddenDir = `${process.env.HOME}/${consts.GLOBAL_CONFIG_DIR}`;
         });
 
         it('returns both config directories when no options passed', () => {
