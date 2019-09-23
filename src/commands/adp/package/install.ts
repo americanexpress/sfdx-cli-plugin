@@ -65,7 +65,7 @@ export default class Install extends SfdxCommand {
         const forceLatest: boolean = this.flags.forcelatest;
 
         const verbose = true;
-        this.ux.startSpinner(chalk.gray('Retrieving package versions'));
+        console.log('Retrieving package versions...');
         const projectJsonObj = await pkg.getProjectJson();
         const dependencies = await pkg.getDependencies({
             projectJson: projectJsonObj,
@@ -73,7 +73,9 @@ export default class Install extends SfdxCommand {
             verbose,
             latestVersions: forceLatest
         });
-        this.ux.stopSpinner(chalk.gray('done.'));
+
+        console.log(dependencies);
+        return;
 
         // TODO: Factor this out of the package commands and add to messages.
         if (dependencies === undefined) {

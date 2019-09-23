@@ -49,7 +49,7 @@ $ npm install -g sfdx-cli-plugin
 $ sfdx-cli-plugin COMMAND
 running command...
 $ sfdx-cli-plugin (-v|--version|version)
-sfdx-cli-plugin/0.0.3 darwin-x64 node-v10.15.1
+sfdx-cli-plugin/0.0.4 darwin-x64 node-v10.15.1
 $ sfdx-cli-plugin --help [COMMAND]
 USAGE
   $ sfdx-cli-plugin COMMAND
@@ -99,7 +99,7 @@ EXAMPLE
            // Executes the files in the scripts directory for the target alias, myorg
 ```
 
-_See code: [src/commands/adp/apex/execute.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/apex/execute.ts)_
+_See code: [src/commands/adp/apex/execute.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/apex/execute.ts)_
 
 ## `sfdx-cli-plugin adp:auth:soap:login`
 
@@ -120,7 +120,7 @@ EXAMPLE
   sfdx adp:auth:soap:login -u myusername -p mypassword
 ```
 
-_See code: [src/commands/adp/auth/soap/login.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/auth/soap/login.ts)_
+_See code: [src/commands/adp/auth/soap/login.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/auth/soap/login.ts)_
 
 ## `sfdx-cli-plugin adp:config:show`
 
@@ -142,7 +142,7 @@ EXAMPLES
   sfdx adp:config:show -l
 ```
 
-_See code: [src/commands/adp/config/show.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/config/show.ts)_
+_See code: [src/commands/adp/config/show.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/config/show.ts)_
 
 ## `sfdx-cli-plugin adp:data:run`
 
@@ -171,7 +171,7 @@ EXAMPLES
            // Runs job without user interaction
 ```
 
-_See code: [src/commands/adp/data/run.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/data/run.ts)_
+_See code: [src/commands/adp/data/run.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/data/run.ts)_
 
 ## `sfdx-cli-plugin adp:package:install`
 
@@ -196,7 +196,7 @@ EXAMPLES
   sfdx adp:package:install -u xfrom1 -l
 ```
 
-_See code: [src/commands/adp/package/install.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/package/install.ts)_
+_See code: [src/commands/adp/package/install.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/package/install.ts)_
 
 ## `sfdx-cli-plugin adp:package:installed:list`
 
@@ -218,7 +218,7 @@ EXAMPLE
            // Lists the dependencies and the install status of each for the specified target username
 ```
 
-_See code: [src/commands/adp/package/installed/list.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/package/installed/list.ts)_
+_See code: [src/commands/adp/package/installed/list.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/package/installed/list.ts)_
 
 ## `sfdx-cli-plugin adp:package:list`
 
@@ -247,7 +247,7 @@ EXAMPLES
            // Lists the packages belonging to the specified branch
 ```
 
-_See code: [src/commands/adp/package/list.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/package/list.ts)_
+_See code: [src/commands/adp/package/list.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/package/list.ts)_
 
 ## `sfdx-cli-plugin adp:package:retrieve`
 
@@ -283,7 +283,7 @@ EXAMPLES
          // performs the retrieve-unzip-convert in Quiet mode, i.e without feedback
 ```
 
-_See code: [src/commands/adp/package/retrieve.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/package/retrieve.ts)_
+_See code: [src/commands/adp/package/retrieve.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/package/retrieve.ts)_
 
 ## `sfdx-cli-plugin adp:package:retrieve:postdestruct`
 
@@ -307,7 +307,7 @@ EXAMPLES
            // Retrieves the "postdestruct" package from the org having username/alias "myalias"
 ```
 
-_See code: [src/commands/adp/package/retrieve/postdestruct.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/package/retrieve/postdestruct.ts)_
+_See code: [src/commands/adp/package/retrieve/postdestruct.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/package/retrieve/postdestruct.ts)_
 
 ## `sfdx-cli-plugin adp:package:retrieve:predestruct`
 
@@ -331,7 +331,7 @@ EXAMPLES
            // Retrieves the "predestruct" package from the org having username/alias "myalias"
 ```
 
-_See code: [src/commands/adp/package/retrieve/predestruct.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/package/retrieve/predestruct.ts)_
+_See code: [src/commands/adp/package/retrieve/predestruct.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/package/retrieve/predestruct.ts)_
 
 ## `sfdx-cli-plugin adp:package:uninstall`
 
@@ -354,7 +354,7 @@ EXAMPLES
   sfdx adp:package:uninstall --noprompt
 ```
 
-_See code: [src/commands/adp/package/uninstall.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/package/uninstall.ts)_
+_See code: [src/commands/adp/package/uninstall.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/package/uninstall.ts)_
 
 ## `sfdx-cli-plugin adp:rest:query`
 
@@ -377,7 +377,7 @@ EXAMPLES
   sfdx adp:rest:query -e https://myinstance.com -a myaccesstoken -q "SELECT Id, Name FROM Account limit 5" -m 100
 ```
 
-_See code: [src/commands/adp/rest/query.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/rest/query.ts)_
+_See code: [src/commands/adp/rest/query.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/rest/query.ts)_
 
 ## `sfdx-cli-plugin adp:rest:upsert`
 
@@ -401,7 +401,7 @@ EXAMPLE
   -a myaccesstoken
 ```
 
-_See code: [src/commands/adp/rest/upsert.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/rest/upsert.ts)_
+_See code: [src/commands/adp/rest/upsert.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/rest/upsert.ts)_
 
 ## `sfdx-cli-plugin adp:shell:run`
 
@@ -431,7 +431,7 @@ EXAMPLES
            // Runs script with parameters
 ```
 
-_See code: [src/commands/adp/shell/run.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/shell/run.ts)_
+_See code: [src/commands/adp/shell/run.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/shell/run.ts)_
 
 ## `sfdx-cli-plugin adp:shell:runjar`
 
@@ -466,7 +466,7 @@ EXAMPLES
            // Passing 2 arguments when one or more contains spaces
 ```
 
-_See code: [src/commands/adp/shell/runjar.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/shell/runjar.ts)_
+_See code: [src/commands/adp/shell/runjar.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/shell/runjar.ts)_
 
 ## `sfdx-cli-plugin adp:source:deploy`
 
@@ -515,7 +515,7 @@ EXAMPLES
            // Excludes pre and post destructive metadata (not passed to override)
 ```
 
-_See code: [src/commands/adp/source/deploy.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/source/deploy.ts)_
+_See code: [src/commands/adp/source/deploy.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/source/deploy.ts)_
 
 ## `sfdx-cli-plugin adp:source:destruct`
 
@@ -536,7 +536,7 @@ EXAMPLE
            // Generates a destructiveChanges.xml file for metadata deletions on the tracked org
 ```
 
-_See code: [src/commands/adp/source/destruct.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/source/destruct.ts)_
+_See code: [src/commands/adp/source/destruct.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/source/destruct.ts)_
 
 ## `sfdx-cli-plugin adp:source:destructive:prepare`
 
@@ -558,7 +558,7 @@ EXAMPLE
   -d.
 ```
 
-_See code: [src/commands/adp/source/destructive/prepare.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/source/destructive/prepare.ts)_
+_See code: [src/commands/adp/source/destructive/prepare.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/source/destructive/prepare.ts)_
 
 ## `sfdx-cli-plugin adp:source:prepare`
 
@@ -577,7 +577,7 @@ EXAMPLE
            // Transforms the source under force-app as configured in the project plugin-config.json
 ```
 
-_See code: [src/commands/adp/source/prepare.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/source/prepare.ts)_
+_See code: [src/commands/adp/source/prepare.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/source/prepare.ts)_
 
 ## `sfdx-cli-plugin adp:tooling:query`
 
@@ -600,7 +600,7 @@ EXAMPLES
   sfdx adp:tooling:query -e https://myinstance.com -a myaccesstoken -q "SELECT id FROM SandboxInfo" -m 100
 ```
 
-_See code: [src/commands/adp/tooling/query.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/tooling/query.ts)_
+_See code: [src/commands/adp/tooling/query.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/tooling/query.ts)_
 
 ## `sfdx-cli-plugin adp:tooling:update`
 
@@ -623,7 +623,7 @@ EXAMPLE
   true}' -e https://myinstance.com -a myaccesstoken
 ```
 
-_See code: [src/commands/adp/tooling/update.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.3/src/commands/adp/tooling/update.ts)_
+_See code: [src/commands/adp/tooling/update.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/tooling/update.ts)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin

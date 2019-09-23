@@ -67,6 +67,9 @@ export default class List extends SfdxCommand {
         }
 
         this.ux.table(table.rows, table.options);
+        if (dependencies.findIndex(p => p.id.indexOf('0Ho') > -1) > -1) {
+            this.ux.log(chalk.red('Please use the "04t" ID to specify all dependency versions.'));
+        }
 
         return dependencies;
     }

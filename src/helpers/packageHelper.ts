@@ -16,6 +16,7 @@ import chalk from 'chalk';
 import { execSync } from 'child_process';
 import { isNullOrUndefined } from 'util';
 import * as cliCmd from '../shared/cliCommand';
+import * as sfdxProj from '../shared/sfdxProject';
 
 /**
  * Interface for basic info about a package version
@@ -23,7 +24,10 @@ import * as cliCmd from '../shared/cliCommand';
 export interface PackageVersionBasic {
     id: string;
     name: string;
+    isMain?: boolean;
+    isMainContract?: boolean;
     version: string;
+    versionIdReturned?: string;
 }
 
 /**
@@ -46,6 +50,7 @@ export interface PackageVersionInfo extends PackageVersionBasic {
     installedBuildNumber: number;
     latestBuildNumber: number;
     installedVersion: string;
+    versionToInstall?: string;
     latestVersion: string;
     installed: boolean;
     released: boolean;
@@ -80,7 +85,6 @@ export interface ResponsePackageVersion {
 }
 
 export interface FilterOptions {
-    branch?: string;
     released: boolean;
 }
 
@@ -125,7 +129,9 @@ export function buildBasicTable(packageVersions: PackageVersionInfo[]): TableDat
     retObj.options = {
         columns: [
             { key: 'c1', label: 'Package Name' },
-            { key: 'c2', label: 'Configured Vers.' }
+            { key: 'c2', label: 'This Project' },
+            { key: 'c3', label: 'Config Package ID' },
+            { key: 'c4', label: 'Config Package Vers.' }
         ]
     };
 
@@ -136,7 +142,11 @@ export function buildBasicTable(packageVersions: PackageVersionInfo[]): TableDat
     }
 
     for (const pv of packageVersions) {
-        const row = { c1: pv.name, c2: pv.version };
+        const row = {
+            c1: pv.name,
+            c2: pv.isMain || pv.isMainContract,
+            c3: pv.id,
+            c4: pv.version};
         rows.push(row);
     }
     retObj.rows = rows;
@@ -157,10 +167,11 @@ export function buildVerboseTable(packageVersions: PackageVersionInfo[]): TableD
     retObj.options = {
         columns: [
             { key: 'c1', label: 'Package Name' },
-            { key: 'c2', label: 'Branch' },
-            { key: 'c3', label: 'Configured Vers.' },
-            { key: 'c4', label: 'Version ID'},
-            { key: 'c5', label: 'Version Number' }]
+            { key: 'c2', label: 'This Project' },
+            { key: 'c3', label: 'Config Package ID'},
+            { key: 'c4', label: 'Config Package Vers.' },
+            { key: 'c5', label: 'Version ID'},
+            { key: 'c6', label: 'Version to Install' }]
     };
 
     const rows = [];
@@ -172,7 +183,7 @@ export function buildVerboseTable(packageVersions: PackageVersionInfo[]): TableD
     for (const pv of packageVersions) {
 
         const releasedStr = buildReleasedDisplayString(pv.released, pv.latestBuildNumber);
-        const branchName = isNullOrUndefined(pv.branch) ? '' : chalk.red(pv.branch);
+
         let displayVersion;
         if (isNullOrUndefined(pv.released)) {
             displayVersion = `${pv.latestVersion} (NA)`;
@@ -181,7 +192,12 @@ export function buildVerboseTable(packageVersions: PackageVersionInfo[]): TableD
         } else {
             displayVersion = chalk.red(`${pv.latestVersion} ${releasedStr}`);
         }
-        const row = { c1: pv.name, c2: branchName, c3: pv.version, c4: pv.id, c5: displayVersion };
+        const row = { c1: pv.name,
+                      c2: pv.isMain || pv.isMainContract,
+                      c3: pv.id === null || pv.id === undefined ? 'N/A' : pv.id,
+                      c4: pv.version,
+                      c5: pv.versionIdReturned,
+                      c6: displayVersion };
         rows.push(row);
     }
     retObj.rows = rows;
@@ -236,20 +252,22 @@ export function buildInstalledTable(packageVersions: PackageVersionInfo[]): Tabl
 export async function getDependencies(options: GetDependenciesOptions) {
 
     const projJson = options.projectJson;
-    const pkgDir = projJson.packageDirectories.find(pd => pd.default);
+    const dfltPackageDir = projJson.packageDirectories.find(pd => pd.default);
     const includeParent: boolean = options.includeParent;
     const verbose: boolean = options.verbose;
     const latestVersions: boolean = options.latestVersions;
 
-    if (pkgDir === undefined) {
+    if (dfltPackageDir === undefined) {
         throw new Error('Default package directory not found.');
     }
-    const packageAliases = projJson.packageAliases;
-    const mainPackage = pkgDir.package;
-    const parentVersionNum = pkgDir.versionNumber;
-    let deps = pkgDir.dependencies;
-    if (!includeParent) {
-        deps = deps.filter(d => d.package !== `${mainPackage}_contracts`);
+
+    const mainPackage = sfdxProj.getMainPackage(projJson);
+    let deps;
+    if (includeParent) {
+        deps = sfdxProj.getPackageDependencies(projJson);
+    } else {
+        // Exclude the main contracts dependency
+        deps = sfdxProj.getPackageDependencies(projJson, [mainPackage.packageName + '_contracts']);
     }
 
     let pkgVersions;
@@ -259,35 +277,32 @@ export async function getDependencies(options: GetDependenciesOptions) {
         // Build the comma-delimited list of packages to query
         const packageNames: string[] = new Array();
         if (includeParent) {
-            packageNames.push(mainPackage);
+            packageNames.push(mainPackage.packageName);
         }
 
         for (const dep of deps) {
+            // We want package version for all packages, even those for which we already have the 04t id
             if (dep.versionNumber) {
-                packageNames.push(dep.package);
+                packageNames.push(dep.packageName);
             }
         }
 
-        // Retrieve package versions
-        const pvListCmd = `sfdx force:package:version:list -p '${packageNames}' --json --concise`;
+        // Retrieve package versions if necessary
+        if (packageNames.length > 0) {
 
-        let pkgVersionResp;
-        const noInherit = true;
-        pkgVersionResp = cliCmd.runCmd(pvListCmd, noInherit);
-        pkgVersions = JSON.parse(pkgVersionResp);
+            const pvListCmd = `sfdx force:package:version:list -p '${packageNames}' --json --concise`;
 
-        // try {
-        //     // Can't use cliCommand function here, so that we can return the response
-        //     pkgVersionResp = execSync(pvListCmd, { encoding: 'utf8' });
-        //     pkgVersions = JSON.parse(pkgVersionResp);
-        // } catch (err) {
-        //     return;
-        // }
+            let pkgVersionResp;
+            const noInherit = true;
+            pkgVersionResp = cliCmd.runCmd(pvListCmd, noInherit);
+            pkgVersions = JSON.parse(pkgVersionResp);
+        }
+
     }
 
     // Add the parent project to the array if user opted for it
     if (includeParent) {
-        deps.push({ package: mainPackage, versionNumber: parentVersionNum });
+        deps.push(mainPackage);
     }
 
     const devhubPackageVersions = pkgVersions ? pkgVersions.result : null;
@@ -298,7 +313,8 @@ export async function getDependencies(options: GetDependenciesOptions) {
         filterOptions = {released: true};
     }
 
-    const retArr = buildPackageVersionArray(deps, packageAliases, devhubPackageVersions, filterOptions);
+    const retArr = buildPackageVersionArray(deps, null, devhubPackageVersions, filterOptions);
+
     return retArr;
 }
 
@@ -355,16 +371,16 @@ export function buildReleasedDisplayString(isReleased: boolean, buildNumber: num
 export function isSpecificVersion(input: string) {
     let retVal;
     if (!isNullOrUndefined(input)) {
-        const stripped = input.replace(/[.0-9]/g, '');
+        const stripped = input.replace(/[\-.0-9]/g, '');
         retVal = stripped.trim().length === 0;
     }
     return retVal;
 }
 
-function findVersionNumberByAlias(packageName: string, packageAliases): string {
-    const aliasObj: VersionedAlias = findVersionedAlias(packageName, packageAliases);
-    return isNullOrUndefined(aliasObj) ? 'NA' : aliasObj.versionNumber;
-}
+// function findVersionNumberByAlias(packageName: string, packageAliases): string {
+//     const aliasObj: VersionedAlias = findVersionedAlias(packageName, packageAliases);
+//     return isNullOrUndefined(aliasObj) ? 'NA' : aliasObj.versionNumber;
+// }
 
 /**
  * Searches the package aliases section from the project JSON by package name
@@ -403,50 +419,45 @@ export function findVersionedAlias(packageName: string, packageAliases): Version
  * @param filterOpts
  */
 export function buildPackageVersionArray(
-    filePackageInfoArr,
+    filePackageInfoArr: sfdxProj.ProjectJsonPackage[],
     packageAliases,
     retrievedPackageInfoArr?: ResponsePackageVersion[],
     filterOpts?: FilterOptions): PackageVersionInfo[] {
 
+    // Create the output array
     const retArr: PackageVersionInfo[] = new Array<PackageVersionInfo>();
 
     if (filePackageInfoArr) {
+
+        // Loop through the packages defined in sfdx-project.json
         for (const fpi of filePackageInfoArr) {
             const pvi = {
-                name: fpi.package,
-                version: fpi.versionNumber ? fpi.versionNumber : findVersionNumberByAlias(fpi.package, packageAliases)
+                id: fpi.packageId,
+                name: fpi.packageName,
+                version: fpi.versionNumber,
+                isMain: fpi.isMainPackage,
+                isMainContract: fpi.isMainContractPackage,
+                versionToInstall: fpi.versionNumber
             } as PackageVersionInfo;
 
             let picked: ResponsePackageVersion = null;
+
+            // Devhub package version data present?
             if (retrievedPackageInfoArr) {
+
                 const filteredByName = retrievedPackageInfoArr.filter(v => v.Package2Name === pvi.name);
 
                 if (filterOpts) {
-                    // With filter options
-                    if (filterOpts.branch && filterOpts.released === true) {
-                        throw new Error('Set either --branch or --released, but not both.');
-                    } else if (filterOpts.branch) {
-                        const branch = filterOpts.branch;
-                        if (isSpecificVersion(fpi.versionNumber)) {
-                            const filteredByBranchAndVersion = filteredByName.filter(v => v.Branch === branch && v.Version === fpi.versionNumber);
-                            if (filteredByBranchAndVersion.length > 0) {
-                                picked = getLatest(filteredByBranchAndVersion);
-                            } else {
-                                throw new Error(`Version ${fpi.versionNumber} not found for ${fpi.package} branch: ${branch}`);
-                            }
-                        } else {
-                            const filteredByBranch = filteredByName.filter(v => v.Branch === branch);
-                            if (filteredByBranch.length > 0) {
-                                picked = getLatest(filteredByBranch);
-                            } else {
-                                picked = getLatest(filteredByName);
-                            }
-                        }
-                    } else if (filterOpts.released === true) {
+                    if (filterOpts.released === true) {
                         const filteredByReleased = filteredByName.filter(v => v.IsReleased === true);
                         if (filteredByReleased.length > 0) {
                             // Get latest of released versions
                             picked = getLatest(filteredByReleased);
+                        }
+                    } else if (isSpecificVersion(fpi.versionNumber)) {
+                        const filteredByVersionNum = filteredByName.filter(v => v.Version === fpi.versionNumber);
+                        if (filteredByVersionNum.length > 0) {
+                            picked = getLatest(filteredByVersionNum);
                         }
                     }
 
@@ -455,66 +466,66 @@ export function buildPackageVersionArray(
                         // Check if the version is part of the alias
                         const aliasedVersion: VersionedAlias = findVersionedAlias(pvi.name, packageAliases);
                         if (aliasedVersion != null) {
-                            pvi.id = aliasedVersion.versionId;
+                            // pvi.id = aliasedVersion.versionId;
                             pvi.branch = '';
                             pvi.latestVersion = aliasedVersion.versionNumber;
                             pvi.latestBuildNumber = parseBuildNumber(aliasedVersion.versionNumber);
                         }
                     } else {
-                        pvi.id = picked.SubscriberPackageVersionId;
+                        pvi.versionIdReturned = picked.SubscriberPackageVersionId;
                         pvi.latestVersion = picked.Version;
                         pvi.branch = picked.Branch;
                         pvi.released = picked.IsReleased;
                         pvi.latestBuildNumber = picked.BuildNumber;
+                        pvi.versionToInstall = picked.Version;
                     }
-
                 } else {
                     // Without filter options
                     if (isSpecificVersion(fpi.versionNumber)) {
-                        const filteredByVersionNum = filteredByName.filter(v => v.Branch === null && v.Version === fpi.versionNumber);
+                        const filteredByVersionNum = filteredByName.filter(v => v.Version === fpi.versionNumber);
                         if (filteredByVersionNum.length > 0) {
                             picked = getLatest(filteredByVersionNum);
                         } else {
-                            throw new Error(`Version ${fpi.versionNumber} not found for package, ${fpi.package}.`);
+                            pvi.versionToInstall = null;
                         }
-                    } else {
-                        const filteredOnNotBranched = filteredByName.filter(v => v.Branch === null);
-                        picked = getLatest(filteredOnNotBranched);
                     }
 
                     if (isNullOrUndefined(picked)) {
                         const aliasedVersion: VersionedAlias = findVersionedAlias(pvi.name, packageAliases);
                         if (aliasedVersion != null) {
-                            pvi.id = aliasedVersion.versionId;
+                            // pvi.id = aliasedVersion.versionId;
                             pvi.branch = '';
                             pvi.latestVersion = aliasedVersion.versionNumber;
                             pvi.latestBuildNumber = parseBuildNumber(aliasedVersion.versionNumber);
                         }
                     } else {
-                        pvi.id = picked.SubscriberPackageVersionId;
+                        pvi.versionIdReturned = picked.SubscriberPackageVersionId;
                         pvi.latestVersion = picked.Version;
                         pvi.branch = picked.Branch;
                         pvi.released = picked.IsReleased;
                         pvi.latestBuildNumber = picked.BuildNumber;
+                        pvi.versionToInstall = picked.Version;
                     }
                 } // if filterOptions
 
             } else { // retrievedPackageInfoArr is null
                 const aliasedVersion: VersionedAlias = findVersionedAlias(pvi.name, packageAliases);
                 if (aliasedVersion != null) {
-                    pvi.id = aliasedVersion.versionId;
+                    // pvi.id = aliasedVersion.versionId;
                     pvi.branch = '';
                     pvi.latestVersion = aliasedVersion.versionNumber;
                     pvi.latestBuildNumber = parseBuildNumber(aliasedVersion.versionNumber);
                 }
             }
 
+            retArr.push(pvi);
+
             // If info from devhub passed hasn't been filtered out, add to array
-            if (retrievedPackageInfoArr && pvi.id != null) {
-                retArr.push(pvi);
-            } else if (!retrievedPackageInfoArr) {
-                retArr.push(pvi);
-            }
+            // if (retrievedPackageInfoArr && pvi.id != null) {
+            //     retArr.push(pvi);
+            // } else if (!retrievedPackageInfoArr) {
+            //     retArr.push(pvi);
+            // }
         } // end for
     } // end if filePackageInfoArr
     return retArr;

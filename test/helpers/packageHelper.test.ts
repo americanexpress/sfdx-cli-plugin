@@ -29,19 +29,23 @@ describe('---------- packageHelper UNIT ----------', () => {
         });
 
         it('returns 6 dependencies with no contracts', async () => {
-            expect(packages.length).to.equal(6);
+            expect(packages.length).to.equal(7);
         });
 
         it('result has fflib-apex-mocks listed first', async () => {
             expect(packages[0].name).to.equal('fflib-apex-mocks');
         });
 
-        it('result has d_utilities listed last', () => {
+        it('result has d_utilities listed last', async () => {
             expect(packages[packages.length - 1].name).to.equal('d_utilities');
         });
 
-        it('version aliased package has version number', () => {
+        it('version aliased package has version number', async () => {
             expect(packages.find(p => p.name === 'd_trigger_monitor').version).to.equal('1.0.0.3');
+        });
+
+        it('gets the package ID from the aliases', async () => {
+            expect(packages.find(p => p.name === 'd_trigger_monitor').id).to.equal('04t460000006MLsAAM');
         });
     });
 
@@ -61,15 +65,15 @@ describe('---------- packageHelper UNIT ----------', () => {
 
     describe('buildVerboseTable', () => {
 
-        it('returns a TableData object with 5 columns when input empty', () => {
+        it('returns a TableData object with 6 columns when input empty', () => {
             const result = pkg.buildVerboseTable([]);
             expect(result.options).not.equal(null);
-            expect(result.options.columns.length).equals(5);
+            expect(result.options.columns.length).equals(6);
         });
 
-        it('returns a TableData object with 5 columns and 0 rows when input null', () => {
+        it('returns a TableData object with 6 columns and 0 rows when input null', () => {
             const result = pkg.buildVerboseTable(null);
-            expect(result.options.columns.length).equals(5);
+            expect(result.options.columns.length).equals(6);
         });
 
         it('returns a TableData object with 1 row when version data passed in', () => {
@@ -121,16 +125,16 @@ describe('---------- packageHelper UNIT ----------', () => {
 
     describe('buildBasicTable', () => {
 
-        it('returns a TableData object with 2 columns and 0 rows when input null', () => {
+        it('returns a TableData object with 4 columns and 0 rows when input null', () => {
             const result = pkg.buildBasicTable(null);
             expect(result.options).not.equal(null);
-            expect(result.options.columns.length).equals(2);
+            expect(result.options.columns.length).equals(4);
         });
 
-        it('returns a TableData object with 2 columns and 0 rows when input empty', () => {
+        it('returns a TableData object with 4 columns and 0 rows when input empty', () => {
             const result = pkg.buildBasicTable([]);
             expect(result.options).not.equal(null);
-            expect(result.options.columns.length).equals(2);
+            expect(result.options.columns.length).equals(4);
         });
 
         it('returns a TableData object with 1 row when version data passed in', () => {
@@ -153,11 +157,15 @@ describe('---------- packageHelper UNIT ----------', () => {
     describe('isSpecificVersion', () => {
 
         it('returns FALSE when passed 1.0.0.LATEST', () => {
-            expect(pkg.isSpecificVersion('1.0.0.LATEST')).equals(false);
+            expect(pkg.isSpecificVersion('1.0.0.LATEST')).to.equal(false);
         });
 
         it('returns TRUE when passed 1.0.0.13', () => {
-            expect(pkg.isSpecificVersion('1.0.0.13')).equals(true);
+            expect(pkg.isSpecificVersion('1.0.0.13')).to.equal(true);
+        });
+
+        it('returns TRUE when passed 1.0.0-3', () => {
+            expect(pkg.isSpecificVersion('1.0.0-3')).to.equal(true);
         });
     });
 
@@ -170,35 +178,29 @@ describe('---------- packageHelper UNIT ----------', () => {
             });
 
             it('returns one element when project JSON has one dependency', () => {
-                const result = pkg.buildPackageVersionArray([{ package: 'my_package', versionNumber: '1.0.0.LATEST' }], null);
+                const result = pkg.buildPackageVersionArray([
+                    { packageId: '0Hoxxxxxxxx', packageName: 'my_package', versionNumber: '1.0.0.LATEST', isVersionIdSpecified: false,
+                        isMainPackage: false, isMainContractPackage: false}
+                ], null);
                 expect(result.length).equals(1);
                 expect(result[0].name).equals('my_package');
                 expect(result[0].version).equals('1.0.0.LATEST');
-            });
-
-            it('has version from alias when version aliases are used', () => {
-                const result = pkg.buildPackageVersionArray(
-                    [{ package: 'my_package', versionNumber: '1.0.0.1' },
-                     { package: 'my_alias_versioned_package' }],
-                    { my_package: '0Ho46' ,
-                     'my_alias_versioned_package@1.0.0.2': '04t46' }
-                    , null);
-                expect(result.length).equals(2);
-                expect(result[0].version).to.equal('1.0.0.1');
-                expect(result[1].version).to.equal('1.0.0.2');
             });
         });
 
         describe('when both inputs parameters are populated', () => {
             it('result has additional parameters populated', () => {
-                const result = pkg.buildPackageVersionArray([{ package: 'my_package', versionNumber: '1.0.0.LATEST' }],
+                const result = pkg.buildPackageVersionArray([
+                    { packageId: '04t11111', packageName: 'my_package', versionNumber: '1.0.0.5', isVersionIdSpecified: true,
+                        isMainPackage: false, isMainContractPackage: false}
+                    ],
                     null,
                     [{
                         SubscriberPackageVersionId: '04t11111',
                         Package2Name: 'my_package',
                         Version: '1.0.0.5',
                         BuildNumber: 5,
-                        Branch: 'US123456',
+                        Branch: null,
                         IsReleased: false,
                         CreatedDate: '2018-12-07 09:49'
                     },
@@ -210,43 +212,17 @@ describe('---------- packageHelper UNIT ----------', () => {
                         Branch: null,
                         IsReleased: true,
                         CreatedDate: '2018-12-07 09:49'
-                    }], { branch: 'US123456', released: null });
+                    }], { released: null });
                 expect(result[0].id).equals('04t11111');
-                expect(result[0].latestVersion).equals('1.0.0.5');
-                expect(result[0].branch).equals('US123456');
+                expect(result[0].versionToInstall).equals('1.0.0.5');
                 expect(result[0].released).equals(false);
                 expect(result[0].latestBuildNumber).to.equal(5);
             });
 
-            it('result contains match on branch when specified', () => {
+            it('result contains match in case of specific version when specified', () => {
                 const result = pkg.buildPackageVersionArray(
-                    [{ package: 'my_package', versionNumber: '1.0.0.LATEST' }],
-                    null,
-                    [{
-                        SubscriberPackageVersionId: '04t11111',
-                        Package2Name: 'my_package',
-                        Version: '1.0.0.5',
-                        BuildNumber: 5,
-                        Branch: 'US123456',
-                        IsReleased: false,
-                        CreatedDate: '2018-12-07 09:49'
-                    },
-                    {
-                        SubscriberPackageVersionId: '04t222222',
-                        Package2Name: 'my_package',
-                        Version: '1.0.0.5',
-                        BuildNumber: 1,
-                        Branch: null,
-                        IsReleased: true,
-                        CreatedDate: '2018-12-07 09:49'
-                    }], { branch: 'US123456', released: null });
-
-                expect(result[0].id).equals('04t11111');
-            });
-
-            it('result contains match in case of specific version', () => {
-                const result = pkg.buildPackageVersionArray(
-                    [{ package: 'my_package', versionNumber: '1.0.0.2' }],
+                    [{ packageId: '0HoAAA', packageName: 'my_package', versionNumber: '1.0.0.2', isVersionIdSpecified: false,
+                        isMainPackage: false, isMainContractPackage: false}],
                     null,
                     [{
                         SubscriberPackageVersionId: '04t11111',
@@ -276,310 +252,80 @@ describe('---------- packageHelper UNIT ----------', () => {
                         CreatedDate: '2018-12-10 15:00'
                     }]);
 
-                expect(result[0].id).equals('04t22222');
+                expect(result[0].versionIdReturned).equals('04t22222');
             });
 
-            it('result contains latest non-branch version if match on package branch not found', () => {
-
+            it ('has versionToInstall set to released when released filter option set', () => {
                 const result = pkg.buildPackageVersionArray(
-                    [{ package: 'my_package', versionNumber: '1.0.0.LATEST' }],
+                    [{ packageId: '0HoAAA', packageName: 'my_package', versionNumber: '1.0.0.2', isVersionIdSpecified: false,
+                    isMainPackage: false, isMainContractPackage: false}],
                     null,
                     [{
-                        SubscriberPackageVersionId: '04t1',
+                        SubscriberPackageVersionId: '04t11111',
                         Package2Name: 'my_package',
                         Version: '1.0.0.1',
                         BuildNumber: 1,
                         Branch: null,
-                        IsReleased: false,
-                        CreatedDate: '2018-12-01 09:49'
+                        IsReleased: true,
+                        CreatedDate: '2018-12-03 09:49'
                     },
                     {
-                        SubscriberPackageVersionId: '04t2',
+                        SubscriberPackageVersionId: '04t22222',
                         Package2Name: 'my_package',
                         Version: '1.0.0.2',
                         BuildNumber: 2,
                         Branch: null,
                         IsReleased: false,
-                        CreatedDate: '2018-12-02 09:49'
+                        CreatedDate: '2018-12-07 09:49'
                     },
                     {
-                        SubscriberPackageVersionId: '04t3',
+                        SubscriberPackageVersionId: '04t33333',
                         Package2Name: 'my_other package',
                         Version: '1.0.1.1',
                         BuildNumber: 1,
                         Branch: null,
                         IsReleased: false,
                         CreatedDate: '2018-12-07 09:49'
-                    }], { branch: 'Nonexistent_Branch', released: null });
+                    }], {released: true});
 
-                expect(result[0].id).to.equal('04t2');
+                expect(result[0].versionToInstall).to.equal('1.0.0.1');
             });
 
-            it('throws error if specified version does not exist', () => {
-                let errorMsg = '';
-                try {
-                    pkg.buildPackageVersionArray(
-                        [{ package: 'my_package', versionNumber: '1.0.0.4' }],
-                        null,
-                        [{
-                            SubscriberPackageVersionId: '04t11111',
-                            Package2Name: 'my_package',
-                            Version: '1.0.0.1',
-                            BuildNumber: 1,
-                            Branch: null,
-                            IsReleased: false,
-                            CreatedDate: '2018-12-03 09:49'
-                        },
-                        {
-                            SubscriberPackageVersionId: '04t22222',
-                            Package2Name: 'my_package',
-                            Version: '1.0.0.2',
-                            BuildNumber: 2,
-                            Branch: null,
-                            IsReleased: false,
-                            CreatedDate: '2018-12-07 09:49'
-                        },
-                        {
-                            SubscriberPackageVersionId: '04t33333',
-                            Package2Name: 'my_other package',
-                            Version: '1.0.1.1',
-                            BuildNumber: 1,
-                            Branch: null,
-                            IsReleased: false,
-                            CreatedDate: '2018-12-07 09:49'
-                        }]);
-
-                } catch (err) {
-                    errorMsg = err.message;
-                }
-
-                expect(errorMsg).to.equal('Version 1.0.0.4 not found for package, my_package.');
-            });
-
-            it('throws error if no match found on specified version and branch', () => {
-                let errorMsg = '';
-                try {
-                    pkg.buildPackageVersionArray(
-                        [{ package: 'my_package', versionNumber: '1.0.0.3' }],
-                        null,
-                        [{
-                            SubscriberPackageVersionId: '04t11111',
-                            Package2Name: 'my_package',
-                            Version: '1.0.0.1',
-                            BuildNumber: 1,
-                            Branch: 'Test_Branch',
-                            IsReleased: false,
-                            CreatedDate: '2018-12-07 09:49'
-                        },
-                        {
-                            SubscriberPackageVersionId: '04t22222',
-                            Package2Name: 'my_package',
-                            Version: '1.0.0.2',
-                            BuildNumber: 2,
-                            Branch: 'Test_Branch',
-                            IsReleased: false,
-                            CreatedDate: '2018-12-07 09:49'
-                        },
-                        {
-                            SubscriberPackageVersionId: '04t33333',
-                            Package2Name: 'my_other package',
-                            Version: '1.0.0.3',
-                            BuildNumber: 1,
-                            Branch: null,
-                            IsReleased: false,
-                            CreatedDate: '2018-12-07 09:49'
-                        }], { branch: 'Test_Branch', released: null });
-
-                } catch (err) {
-                    errorMsg = err.message;
-                }
-
-                expect(errorMsg).to.equal('Version 1.0.0.3 not found for my_package branch: Test_Branch');
-            });
-
-            it('returns only released packages if --releasedonly flag is set', () => {
-
+            it('has value of null in versionToInstall property when specified version number not found', () => {
                 const result = pkg.buildPackageVersionArray(
-                    [{ package: 'first_package', versionNumber: '1.0.0.LATEST' },
-                    { package: 'second_package', versionNumber: '1.0.1.LATEST' },
-                    { package: 'third_package', versionNumber: '1.0.0.LATEST' }],
+                    [{ packageId: '0HoAAA', packageName: 'my_package', versionNumber: '1.0.0.3', isVersionIdSpecified: false,
+                    isMainPackage: false, isMainContractPackage: false}],
                     null,
                     [{
-                        SubscriberPackageVersionId: '04t0',
-                        Package2Name: 'first_package',
+                        SubscriberPackageVersionId: '04t11111',
+                        Package2Name: 'my_package',
                         Version: '1.0.0.1',
                         BuildNumber: 1,
-                        Branch: null,
-                        IsReleased: true,
-                        CreatedDate: '2018-12-01 09:49'
-                    },
-                    {
-                        SubscriberPackageVersionId: '04t1',
-                        Package2Name: 'first_package',
-                        Version: '1.0.0.2',
-                        BuildNumber: 2,
                         Branch: null,
                         IsReleased: false,
                         CreatedDate: '2018-12-03 09:49'
                     },
                     {
-                        SubscriberPackageVersionId: '04t2',
-                        Package2Name: 'second_package',
-                        Version: '1.0.0.1',
-                        BuildNumber: 1,
-                        Branch: null,
-                        IsReleased: false,
-                        CreatedDate: '2018-09-07 10:00'
-                    },
-                    {
-                        SubscriberPackageVersionId: '04t3',
-                        Package2Name: 'third_package',
-                        Version: '1.0.0.1',
-                        BuildNumber: 1,
-                        Branch: null,
-                        IsReleased: true,
-                        CreatedDate: '2018-10-03 13:45'
-                    }], { branch: null, released: true });
-
-                expect(result.length).to.equal(2);
-                expect(result[0].id).to.equal('04t0');
-                expect(result[1].id).to.equal('04t3');
-            });
-
-            it('returns only non-branched packages if --branch flag is not set', () => {
-
-                const result = pkg.buildPackageVersionArray(
-                    [{ package: 'first_package', versionNumber: '1.0.0.LATEST' },
-                    { package: 'second_package', versionNumber: '1.0.1.LATEST' }],
-                    null,
-                    [{
-                        SubscriberPackageVersionId: '04t0',
-                        Package2Name: 'first_package',
-                        Version: '1.0.0.1',
-                        BuildNumber: 1,
-                        Branch: null,
-                        IsReleased: false,
-                        CreatedDate: '2018-12-01 09:49'
-                    },
-                    {
-                        SubscriberPackageVersionId: '04t1',
-                        Package2Name: 'first_package',
+                        SubscriberPackageVersionId: '04t22222',
+                        Package2Name: 'my_package',
                         Version: '1.0.0.2',
                         BuildNumber: 2,
                         Branch: null,
                         IsReleased: false,
-                        CreatedDate: '2018-12-02 09:49'
+                        CreatedDate: '2018-12-07 09:49'
                     },
                     {
-                        SubscriberPackageVersionId: '04t2',
-                        Package2Name: 'first_package',
-                        Version: '1.0.0.3',
-                        BuildNumber: 3,
-                        Branch: null,
-                        IsReleased: false,
-                        CreatedDate: '2018-12-03 09:49'
-                    },
-                    {
-                        SubscriberPackageVersionId: '04t3',
-                        Package2Name: 'first_package',
-                        Version: '1.0.0.12',
-                        BuildNumber: 12,
-                        Branch: 'mybranch',
-                        IsReleased: false,
-                        CreatedDate: '2018-12-04 09:49'
-                    }
-                    ]);
-
-                expect(result.length).to.equal(1);
-                expect(result[0].id).to.equal('04t2');
-            });
-
-            it('throws error if branch is set and released is TRUE', () => {
-                let errorMsg = '';
-                try {
-                    pkg.buildPackageVersionArray(
-                        [{ package: 'my_package', versionNumber: '1.0.0.LATEST' }],
-                        null,
-                        [{
-                            SubscriberPackageVersionId: '04t11111',
-                            Package2Name: 'my_package',
-                            Version: '1.0.0.1',
-                            BuildNumber: 1,
-                            Branch: 'Test_Branch',
-                            IsReleased: false,
-                            CreatedDate: '2018-12-07 09:49'
-                        }], { branch: 'Test_Branch', released: true });
-
-                } catch (err) {
-                    errorMsg = err.message;
-                }
-
-                expect(errorMsg).to.equal('Set either --branch or --released, but not both.');
-            });
-
-            it('uses version number from devhub package info rather than aliases section', () => {
-
-                const aliases = JSON.parse(`{"first_package":"04t10",
-                    "first_package@1.0.0-1":"04t11",
-                    "first_package@1.0.0-2":"04t12",
-                    "second_package":"04t20",
-                    "second_package@1.0.0":"04t21"}`);
-
-                const result = pkg.buildPackageVersionArray(
-                    [{ package: 'first_package', versionNumber: '1.0.0.LATEST' },
-                    { package: 'second_package', versionNumber: '1.0.1.LATEST' }],
-                    aliases,
-                    [{
-                        SubscriberPackageVersionId: '04t10',
-                        Package2Name: 'first_package',
-                        Version: '1.0.0.0',
-                        BuildNumber: 0,
-                        Branch: null,
-                        IsReleased: false,
-                        CreatedDate: '2019-12-01 06:00'
-                    },
-                    {
-                        SubscriberPackageVersionId: '04t11',
-                        Package2Name: 'first_package',
-                        Version: '1.0.0.1',
+                        SubscriberPackageVersionId: '04t33333',
+                        Package2Name: 'my_other package',
+                        Version: '1.0.1.1',
                         BuildNumber: 1,
                         Branch: null,
                         IsReleased: false,
-                        CreatedDate: '2019-12-01 07:00'
-                    },
-                    {
-                        SubscriberPackageVersionId: '04t12',
-                        Package2Name: 'first_package',
-                        Version: '1.0.0.2',
-                        BuildNumber: 2,
-                        Branch: null,
-                        IsReleased: false,
-                        CreatedDate: '2019-12-01 08:00'
-                    },
-                    {
-                        SubscriberPackageVersionId: '04t20',
-                        Package2Name: 'second_package',
-                        Version: '1.0.0.0',
-                        BuildNumber: 0,
-                        Branch: null,
-                        IsReleased: false,
-                        CreatedDate: '2019-12-02 06:00'
-                    },
-                    {
-                        SubscriberPackageVersionId: '04t21',
-                        Package2Name: 'second_package',
-                        Version: '1.0.0.1',
-                        BuildNumber: 1,
-                        Branch: null,
-                        IsReleased: false,
-                        CreatedDate: '2019-12-02 07:00'
-                    }]
-                );
+                        CreatedDate: '2018-12-07 09:49'
+                    }]);
 
-                expect(result[0].latestVersion).to.equal('1.0.0.2');
-
+                expect(result[0].versionToInstall).to.equal(null);
             });
-
         });
     }); // end buildPackageVersionArray
 
