@@ -42,12 +42,10 @@ export default class Uninstall extends SfdxCommand {
         const username = this.org.getUsername();
         const alias = org.getAliasByUsername(username);
 
-        this.ux.startSpinner(chalk.gray('Retrieving installed packages'));
+        this.ux.log('Retrieving installed packages... ');
 
         // Get the list of installed packages in uninstall order
         const uninstallArr: pkg.PackageVersionBasic[] = await org.getInstalledPackages(username);
-
-        this.ux.stopSpinner(chalk.gray('done.'));
 
         if (uninstallArr.length === 0) {
             this.ux.log('Nothing to uninstall.');
@@ -55,8 +53,10 @@ export default class Uninstall extends SfdxCommand {
         }
 
         // Display to the user
-        for (const pv of uninstallArr) {
-            this.ux.log(`${pv.name} - ${pv.version}`);
+        if (!this.flags.noprompt) {
+            for (const pv of uninstallArr) {
+                this.ux.log(`${pv.name} - ${pv.version}`);
+            }
         }
 
         let continueConfirmed: boolean = true;
@@ -77,39 +77,42 @@ export default class Uninstall extends SfdxCommand {
             return;
         }
 
-        this.ux.log(chalk.gray('Uninstalling unlocked packages...'));
-
         const errors: string[] = new Array();
 
         // Loop through the package versions to uninstall
         for (const toUninstall of uninstallArr) {
 
             // Build the uninstall command
-            this.ux.log(`Uninstalling ${toUninstall.name} v${toUninstall.version}...`);
-            const uninstallCmd = `sfdx force:package:uninstall -p ${toUninstall.id} -u ${username} --json`;
-            let uninstallRespJson = null;
+            process.stdout.write(`Uninstalling ${toUninstall.name} v${toUninstall.version}... `);
+            const uninstallCmd = `sfdx force:package:uninstall -p ${toUninstall.id} -u ${username} --json -w 30`;
+            let uninstallRespJson;
             try {
                 // Try to execute the uninstall command
                 uninstallRespJson = childproc.execSync(uninstallCmd, {encoding: 'utf8'});
+                const uninstallResp = JSON.parse(uninstallRespJson);
+                if (uninstallResp.status === 0 && uninstallResp.result.Status.toUpperCase() === 'SUCCESS') {
+                    this.ux.log('done.');
+                }
             } catch (err) {
                 // Display error message
+                this.ux.log();
                 const consolidatedErrMsg = 'Component is in use by another component';
                 if (err.message.includes(consolidatedErrMsg)) {
-                    this.ux.error(chalk.red(`Unable to install. ${consolidatedErrMsg}.`));
+                    this.ux.error(chalk.red(`Unable to uninstall. ${consolidatedErrMsg}.`));
                 } else {
                     this.ux.error('Unexpected error.');
                 }
                 return;
             }
 
-            // Provide feedback on the uninstall status until done
-            const uninstallResp = JSON.parse(uninstallRespJson);
-            const requestId: string = uninstallResp.result.Id;
-            process.stdout.write('  Polling uninstall status:    ');
+            // // Provide feedback on the uninstall status until done
+            // const uninstallResp = JSON.parse(uninstallRespJson);
+            // const requestId: string = uninstallResp.result.Id;
+            // process.stdout.write('  Polling uninstall status:    ');
 
-            const statusCmd = `sfdx force:package:uninstall:report -i ${requestId}  -u ${username} --json`;
-            statusChecker.checkStatusUntilDone (statusCmd, () => { errors.push(toUninstall.name); },
-                    { maxTries: 25, taskName: 'Uninstall'});
+            // const statusCmd = `sfdx force:package:uninstall:report -i ${requestId}  -u ${username} --json`;
+            // statusChecker.checkStatusUntilDone (statusCmd, () => { errors.push(toUninstall.name); },
+            //         { maxTries: 25, taskName: 'Uninstall'});
 
         }
 

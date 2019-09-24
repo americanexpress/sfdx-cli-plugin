@@ -46,7 +46,7 @@ export default class List extends SfdxCommand {
                                 projectJson: projectJsonObj,
                                 includeParent,
                                 verbose: true,
-                                latestVersions: forceLatest
+                                versionBias: forceLatest ? 'Latest' : 'Released'
                             });
         this.ux.stopSpinner(chalk.gray('done.'));
 

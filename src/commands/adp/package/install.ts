@@ -15,9 +15,9 @@ import { SfdxCommand } from '@salesforce/command';
 import chalk from 'chalk';
 import childproc = require('child_process');
 import * as inquirer from 'inquirer';
+import { isNullOrUndefined } from 'util';
 import pkg = require('../../../helpers/packageHelper');
 import * as org from '../../../shared/orgUtil';
-import * as statusChecker from '../../../shared/statusChecker';
 
 export default class Install extends SfdxCommand {
     public static description = 'Installs the current package and/or its dependencies';
@@ -29,10 +29,12 @@ export default class Install extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        allpackages: { char: 'a', type: 'boolean', default: false, description: 'All packages, not just dependencies'},
-        forcelatest: {char: 'l', type: 'boolean', default: false,
-                        description: 'forces install of UN-released, latest package'},
-        noprompt: {type: 'boolean', description: 'disables all prompts'}
+        allpackages: { char: 'a', type: 'boolean', default: false, description: 'all packages, not just dependencies' },
+        versionbias: {
+            char: 'b', type: 'enum', description: 'Type of bias to use when determining package versions (Latest|Released)',
+            options: ['Latest', 'Released']
+        },
+        noprompt: { type: 'boolean', description: 'disables all prompts' }
     };
 
     protected static requiresUsername = true;
@@ -62,7 +64,6 @@ export default class Install extends SfdxCommand {
         }
 
         const includeParent: boolean = this.flags.allpackages;
-        const forceLatest: boolean = this.flags.forcelatest;
 
         const verbose = true;
         console.log('Retrieving package versions...');
@@ -71,11 +72,8 @@ export default class Install extends SfdxCommand {
             projectJson: projectJsonObj,
             includeParent,
             verbose,
-            latestVersions: forceLatest
+            versionBias: this.flags.versionbias
         });
-
-        console.log(dependencies);
-        return;
 
         // TODO: Factor this out of the package commands and add to messages.
         if (dependencies === undefined) {
@@ -83,9 +81,9 @@ export default class Install extends SfdxCommand {
             return;
         }
 
-        this.ux.startSpinner(chalk.gray(`Retrieving installed dependencies from ${alias}`));
+        process.stdout.write(`Retrieving installed dependencies from ${alias}... `);
         const dependencyVersions = await pkg.getInstalledDependencies(dependencies, username);
-        this.ux.stopSpinner(chalk.gray('done.'));
+        console.log('done.');
 
         this.ux.log('Starting installation...');
 
@@ -101,27 +99,32 @@ export default class Install extends SfdxCommand {
                 this.ux.log(`Skipped ${pkgVersion.name} v${pkgVersion.installedVersion} ${releasedStr}. Already installed.`);
             } else {
                 // Install or upgrade the package
-                this.ux.log(`Installing ${pkgVersion.name} v${pkgVersion.latestVersion} ${releasedStr}...`);
-                const installCmd = `sfdx force:package:install -r -p ${pkgVersion.id} -u ${username} --json`;
-                const installRespJson = childproc.execSync(installCmd, {encoding: 'utf8'});
-                const installResp = JSON.parse(installRespJson);
-                const requestId: string = installResp.result.Id;
-                process.stdout.write('  Polling install status:    ');
+                const versionOrId = isNullOrUndefined(pkgVersion.installationVersion) ? pkgVersion.installationVersionId : `v${pkgVersion.installationVersion}`;
+                process.stdout.write(`Installing ${pkgVersion.name} ${versionOrId} ${releasedStr}... `);
+                const installCmd = `sfdx force:package:install -r -p ${pkgVersion.installationVersionId} -u ${username} --json --wait 20`;
+                let installRespJson;
+                try {
+                    installRespJson = childproc.execSync(installCmd, { encoding: 'utf8', stdio: 'pipe'});
+                    const installResp = JSON.parse(installRespJson);
+                    if (installResp.status === 0 && installResp.result.Status.toUpperCase() === 'SUCCESS') {
+                        console.log('done.');
+                    }
+                } catch (e) {
+                    console.log('failed.');
+                    errors.push(installRespJson);
+                    break;
+                }
 
-                const statusCmd = `sfdx force:package:install:report -i ${requestId}  -u ${username} --json`;
-
-                statusChecker.checkStatusUntilDone (statusCmd, () => { errors.push(pkgVersion.name); },
-                    { maxTries: 25, taskName: 'Installation'});
             }
         } // end for
 
         // Display end-of-process message
-        const endMsgStart: string = 'Installation completed';
+        const endMsgStart: string = 'Installation';
         let endMsg: string = '';
         if (errors.length > 0) {
-            endMsg = chalk.red(`${endMsgStart} with errors.`);
+            endMsg = chalk.red(`${endMsgStart} failed.`);
         } else {
-            endMsg = chalk.green(`${endMsgStart} successfully.`);
+            endMsg = chalk.green(`${endMsgStart} completed successfully.`);
         }
         this.ux.log(endMsg);
     }
@@ -132,14 +135,18 @@ function buildConfirmMessage(flags, alias: string) {
     let message: string = '';
 
     if (!flags.noprompt) {
-        if (flags.allpackages && flags.forcelatest) {
-            message = `About to install ALL LATEST packages, including parent on ${chalk.magenta(alias)}. Confirm?`;
+        if (flags.allpackages && flags.versionbias === 'Latest') {
+            message = `About to install ALL LATEST packages, including parent on ${chalk.magenta(alias)}. Cotinue?`;
+        } else if (flags.allpackages && flags.versionbias === 'Released') {
+            message = `About to install ALL LATEST RELEASED package, including parent on ${chalk.magenta(alias)}. Continue?`;
+        } else if (flags.versionbias === 'Latest') {
+            message = `About to install LATEST DEPENDENCY packages on ${chalk.magenta(alias)}. Continue?`;
+        } else if (flags.versionbias === 'Released') {
+            message = `About to install LATEST RELEASED DEPENDENCY packages on ${chalk.magenta(alias)}. Continue?`;
         } else if (flags.allpackages) {
-            message = `About to install ALL RELEASED package, including parent on ${chalk.magenta(alias)}. Confirm?`;
-        } else if (flags.forcelatest) {
-            message = `About to install LATEST DEPENDENCY packages on ${chalk.magenta(alias)}. Confirm?`;
+            message = `About to install ALL packages AS CONFIGURED on ${chalk.magenta(alias)}. Continue?`;
         } else {
-            message = `About to install RELEASED DEPENDENCY packages on ${chalk.magenta(alias)}. Confirm?`;
+            message = `About to install DEPENDENCY packages AS CONFIGURED on ${chalk.magenta(alias)}. Continue?`;
         }
     }
 

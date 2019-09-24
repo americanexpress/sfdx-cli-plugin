@@ -12,9 +12,11 @@ export interface ProjectJsonPackage {
 export function getMainPackage(projectJson) {
     const projJson = projectJson;
     const defaultPackageDir = projJson.packageDirectories.find(pd => pd.default);
+    const packageName = defaultPackageDir.package;
+    const aliases = projJson.packageAliases;
     const pkg: ProjectJsonPackage = {
-        packageName: defaultPackageDir.package,
-        packageId: null,
+        packageName,
+        packageId: aliases[packageName],
         isVersionIdSpecified: null,
         versionNumber: defaultPackageDir.versionNumber,
         isMainPackage: true,

@@ -212,9 +212,9 @@ describe('---------- packageHelper UNIT ----------', () => {
                         Branch: null,
                         IsReleased: true,
                         CreatedDate: '2018-12-07 09:49'
-                    }], { released: null });
+                    }]);
                 expect(result[0].id).equals('04t11111');
-                expect(result[0].versionToInstall).equals('1.0.0.5');
+                expect(result[0].installationVersion).equals('1.0.0.5');
                 expect(result[0].released).equals(false);
                 expect(result[0].latestBuildNumber).to.equal(5);
             });
@@ -252,10 +252,10 @@ describe('---------- packageHelper UNIT ----------', () => {
                         CreatedDate: '2018-12-10 15:00'
                     }]);
 
-                expect(result[0].versionIdReturned).equals('04t22222');
+                expect(result[0].installationVersionId).equals('04t22222');
             });
 
-            it ('has versionToInstall set to released when released filter option set', () => {
+            it ('has installationVersion set to released version when version bias set to "Released"', () => {
                 const result = pkg.buildPackageVersionArray(
                     [{ packageId: '0HoAAA', packageName: 'my_package', versionNumber: '1.0.0.2', isVersionIdSpecified: false,
                     isMainPackage: false, isMainContractPackage: false}],
@@ -286,12 +286,12 @@ describe('---------- packageHelper UNIT ----------', () => {
                         Branch: null,
                         IsReleased: false,
                         CreatedDate: '2018-12-07 09:49'
-                    }], {released: true});
+                    }], 'Released');
 
-                expect(result[0].versionToInstall).to.equal('1.0.0.1');
+                expect(result[0].installationVersion).to.equal('1.0.0.1');
             });
 
-            it('has value of null in versionToInstall property when specified version number not found', () => {
+            it('has value of null in installationVersion property when specified version number not found', () => {
                 const result = pkg.buildPackageVersionArray(
                     [{ packageId: '0HoAAA', packageName: 'my_package', versionNumber: '1.0.0.3', isVersionIdSpecified: false,
                     isMainPackage: false, isMainContractPackage: false}],
@@ -324,7 +324,43 @@ describe('---------- packageHelper UNIT ----------', () => {
                         CreatedDate: '2018-12-07 09:49'
                     }]);
 
-                expect(result[0].versionToInstall).to.equal(null);
+                expect(result[0].installationVersion).to.equal('1.0.0.3');
+            });
+
+            it('has value in installationVersion that matches configured version when version uses hyphenated build number', () => {
+                const result = pkg.buildPackageVersionArray(
+                    [{ packageId: '04t222', packageName: 'my_package', versionNumber: '1.0.0-2', isVersionIdSpecified: false,
+                    isMainPackage: false, isMainContractPackage: false}],
+                    null,
+                    [{
+                        SubscriberPackageVersionId: '04t111',
+                        Package2Name: 'my_package',
+                        Version: '1.0.0.1',
+                        BuildNumber: 1,
+                        Branch: null,
+                        IsReleased: false,
+                        CreatedDate: '2018-12-03 09:49'
+                    },
+                    {
+                        SubscriberPackageVersionId: '04t222',
+                        Package2Name: 'my_package',
+                        Version: '1.0.0.2',
+                        BuildNumber: 2,
+                        Branch: null,
+                        IsReleased: false,
+                        CreatedDate: '2018-12-07 09:49'
+                    },
+                    {
+                        SubscriberPackageVersionId: '04t333',
+                        Package2Name: 'my_other package',
+                        Version: '1.0.1.1',
+                        BuildNumber: 1,
+                        Branch: null,
+                        IsReleased: false,
+                        CreatedDate: '2018-12-07 09:49'
+                    }]);
+
+                expect(result[0].installationVersion).to.equal('1.0.0.2');
             });
         });
     }); // end buildPackageVersionArray

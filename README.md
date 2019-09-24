@@ -230,7 +230,7 @@ USAGE
 
 OPTIONS
   -a, --allpackages                               All packages, not just dependencies
-  -l, --latest                                    display latest when verbose option chosen
+  -b, --versionbias=(Latest|Released)             bias to use when determining package versions (Latest|Released)
   -v, --verbose                                   display extended package version details
   --json                                          format output as json
   --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
