@@ -17,7 +17,6 @@ import childproc = require('child_process');
 import * as inquirer from 'inquirer';
 import pkg = require('../../../helpers/packageHelper');
 import * as org from '../../../shared/orgUtil';
-import * as statusChecker from '../../../shared/statusChecker';
 
 export default class Uninstall extends SfdxCommand {
     public static description = 'Uninstalls the current package and/or its dependencies';

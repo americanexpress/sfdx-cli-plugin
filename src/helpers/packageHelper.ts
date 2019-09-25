@@ -50,7 +50,7 @@ export interface PackageVersionInfo extends PackageVersionBasic {
     installedBuildNumber: number;
     latestBuildNumber: number;
     installedVersion: string;
-    installationVersion?: string;
+    installationVersion: string;
     latestVersion: string;
     installed: boolean;
     released: boolean;

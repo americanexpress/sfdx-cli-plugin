@@ -64,5 +64,9 @@ describe('---------- sfdxProject UNIT ----------', () => {
         it('returns FALSE when 2.1.1.1 and 2.1.1.0 are passed', () => {
             expect(sfdxProj.isLaterVersion('2.1.1.1', '2.1.1.0')).to.equal(false);
         });
+
+        it('returns FALSE when 1.0.0.LATEST and 1.0.0.0 are passed', () => {
+            expect(sfdxProj.isLaterVersion('1.0.0.LATEST', '1.0.0.0')).to.equal(false);
+        });
     });
 });

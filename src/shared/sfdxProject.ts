@@ -1,3 +1,5 @@
+import { isNullOrUndefined } from 'util';
+
 export interface ProjectJsonPackage {
     packageName: string;
     isMainPackage: boolean;
@@ -81,6 +83,9 @@ export function getPackageDependencies(projectJson, excludePackageNames?: string
 }
 
 export function isLaterVersion(version1: string, version2: string) {
+    if (isNullOrUndefined(version1) || isNullOrUndefined(version2)) {
+        return false;
+    }
     const versionArr1 = version1.split('.');
     const versionArr2 = version2.split('.');
     let isLater = false;

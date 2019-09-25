@@ -84,8 +84,9 @@ describe('---------- packageHelper UNIT ----------', () => {
                 version: 'version',
                 installedBuildNumber: 1,
                 latestBuildNumber: 2,
-                installedVersion: 'installed version',
-                latestVersion: 'latest version',
+                installationVersion: '1.0.0.1',
+                installedVersion: '1.0.0.1',
+                latestVersion: '1.0.0.1',
                 installed: false,
                 released: false
             }]);
@@ -95,10 +96,10 @@ describe('---------- packageHelper UNIT ----------', () => {
 
     describe('buildInstalledTable', () => {
 
-        it('returns a TableData object with 7 columns when input empty', () => {
+        it('returns a TableData object with 6 columns when input empty', () => {
             const result = pkg.buildInstalledTable([]);
             expect(result.options).not.equal(null);
-            expect(result.options.columns.length).equals(7);
+            expect(result.options.columns.length).equals(6);
         });
 
         it('has last column labeled "Status"', () => {
@@ -114,8 +115,9 @@ describe('---------- packageHelper UNIT ----------', () => {
                 version: 'version',
                 installedBuildNumber: 1,
                 latestBuildNumber: 2,
-                installedVersion: 'installed version',
-                latestVersion: 'latest version',
+                installedVersion: '1.0.0.1',
+                installationVersion: '1.0.0.1',
+                latestVersion: '1.0.0.1',
                 installed: true,
                 released: true
             }]);
@@ -145,6 +147,7 @@ describe('---------- packageHelper UNIT ----------', () => {
                 version: 'version',
                 installedBuildNumber: null,
                 latestBuildNumber: null,
+                installationVersion: null,
                 installedVersion: null,
                 latestVersion: null,
                 installed: null,
@@ -373,18 +376,18 @@ describe('---------- packageHelper UNIT ----------', () => {
     });
 
     describe('computeInstalledStatus', () => {
-        it('returns "Behind" in yellow when installed and latest version numbers don\'t match', () => {
-            const result = pkg.computeInstalledStatus('1.0.0.11', '1.0.0.12');
+        it('returns "Behind" in yellow when installed version is greater than installation version number', () => {
+            const result = pkg.computeInstalledStatus('1.0.0.12', '1.0.0.11');
             expect(result).to.equal(chalk.yellow('Behind'));
         });
 
-        it('returns "Latest" in green when installed and latest version numbers match', () => {
+        it('returns "Same" in green when installation and installed version numbers match', () => {
             const result = pkg.computeInstalledStatus('1.0.0.12', '1.0.0.12');
-            expect(result).to.equal(chalk.green('Latest'));
+            expect(result).to.equal(chalk.green('Same'));
         });
 
         it('returns "Missing" in red when installed version number is undefined', () => {
-            const result = pkg.computeInstalledStatus(undefined, '1.0.0.12');
+            const result = pkg.computeInstalledStatus('1.0.0.12', undefined);
             expect(result).to.equal(chalk.red('Missing'));
         });
     });
