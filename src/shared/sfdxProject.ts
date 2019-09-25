@@ -80,6 +80,22 @@ export function getPackageDependencies(projectJson, excludePackageNames?: string
     return pkgList;
 }
 
+export function isLaterVersion(version1: string, version2: string) {
+    const versionArr1 = version1.split('.');
+    const versionArr2 = version2.split('.');
+    let isLater = false;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < versionArr1.length; i++) {
+        const num1 = parseInt(versionArr1[i], 10);
+        const num2 = parseInt(versionArr2[i], 10);
+        if (num2 > num1) {
+            isLater = true;
+            break;
+        }
+    }
+    return isLater;
+}
+
 export function stripAtVersion(input: string): string {
     if (input.indexOf('@') > -1) {
         const parts = input.split('@');

@@ -102,8 +102,9 @@ export interface TableData {
  * to list of dependencies in sfdx-project.json
  */
 export enum InstallStatus {
+    Ahead = 'Ahead',
     Behind = 'Behind',
-    Latest = 'Latest',
+    Same = 'Same',
     Missing = 'Missing'
 }
 
@@ -221,11 +222,10 @@ export function buildInstalledTable(packageVersions: PackageVersionInfo[]): Tabl
         columns: [
             { key: 'c1', label: 'ID' },
             { key: 'c2', label: 'Package Name' },
-            { key: 'c3', label: 'Branch' },
-            { key: 'c4', label: 'Configured Vers.' },
+            { key: 'c3', label: 'Configured Vers.' },
+            { key: 'c4', label: 'Installation Version' },
             { key: 'c5', label: 'Installed Version' },
-            { key: 'c6', label: 'Latest Version' },
-            { key: 'c7', label: 'Status' }]
+            { key: 'c6', label: 'Status' }]
     };
 
     const rows = [];
@@ -237,9 +237,14 @@ export function buildInstalledTable(packageVersions: PackageVersionInfo[]): Tabl
     for (const pv of packageVersions) {
         let row;
 
-        const branchName = pv.branch === null ? '' : chalk.red(pv.branch);
-        const statusStr = computeInstalledStatus(pv.installedVersion, pv.latestVersion);
-        row = { c1: pv.id, c2: pv.name, c3: branchName, c4: pv.version, c5: pv.installedVersion, c6: pv.latestVersion, c7: statusStr };
+        const statusStr = computeInstalledStatus(pv.installationVersion, pv.installedVersion);
+        row = { c1: pv.id,
+            c2: pv.name,
+            c3: pv.version,
+            c4: pv.installationVersion,
+            c5: pv.installedVersion,
+            c6: statusStr
+        };
         rows.push(row);
     }
     retObj.rows = rows;
@@ -517,12 +522,15 @@ export function parseBuildNumber(versionNumber: string): number {
     return parseInt(versionNumber.split('.')[3], 0);
 }
 
-export function computeInstalledStatus(installedVersionNumber: string, latestVersionNumber: string): string {
+export function computeInstalledStatus(installationVersionNumber: string, installedVersionNumber: string): string {
     let status = '';
+
     if (!installedVersionNumber) {
         status = chalk.red(InstallStatus.Missing);
-    } else if (installedVersionNumber === latestVersionNumber) {
-        status = chalk.green(InstallStatus.Latest);
+    } else if (installationVersionNumber === installedVersionNumber) {
+        status = chalk.green(InstallStatus.Same);
+    } else if (sfdxProj.isLaterVersion(installationVersionNumber, installedVersionNumber)) {
+        status = chalk.yellow(InstallStatus.Ahead);
     } else {
         status = chalk.yellow(InstallStatus.Behind);
     }

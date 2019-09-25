@@ -110,7 +110,7 @@ export default class Install extends SfdxCommand {
                         console.log('done.');
                     }
                 } catch (e) {
-                    console.log('failed.');
+                    console.log(chalk.red('failed.'));
                     errors.push(installRespJson);
                     break;
                 }
@@ -122,7 +122,7 @@ export default class Install extends SfdxCommand {
         const endMsgStart: string = 'Installation';
         let endMsg: string = '';
         if (errors.length > 0) {
-            endMsg = chalk.red(`${endMsgStart} failed.`);
+            endMsg = chalk.red(`${endMsgStart} completed with errors.`);
         } else {
             endMsg = chalk.green(`${endMsgStart} completed successfully.`);
         }

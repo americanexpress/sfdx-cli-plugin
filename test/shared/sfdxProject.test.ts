@@ -46,4 +46,23 @@ describe('---------- sfdxProject UNIT ----------', () => {
             expect(packages.find(pkg => pkg.packageName === 'd_generic_apex').isMainContractPackage).to.equal(false);
         });
     });
+
+    describe('isLaterVersion', () => {
+
+        it('returns TRUE when 0.0.0.1 and 1.0.0.0 are passed', () => {
+            expect(sfdxProj.isLaterVersion('0.0.0.1', '1.0.0.0')).to.equal(true);
+        });
+
+        it('returns TRUE when 0.0.0.1 and 0.0.0.2 are passed', () => {
+            expect(sfdxProj.isLaterVersion('0.0.0.1', '0.0.0.2')).to.equal(true);
+        });
+
+        it('returns TRUE when 0.0.1.1 and 0.0.0.23 are passed', () => {
+            expect(sfdxProj.isLaterVersion('0.0.1.1', '0.0.0.23')).to.equal(true);
+        });
+
+        it('returns FALSE when 2.1.1.1 and 2.1.1.0 are passed', () => {
+            expect(sfdxProj.isLaterVersion('2.1.1.1', '2.1.1.0')).to.equal(false);
+        });
+    });
 });
