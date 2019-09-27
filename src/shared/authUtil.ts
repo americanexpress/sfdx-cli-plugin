@@ -19,8 +19,7 @@ import * as fileUtil from './fileUtil';
 
 export interface AuthInfo {
     username: string;
-    accessToken: string;
-    instanceUrl: string;
+    connection: jsforce.Connection;
     userId: string;
     orgId: string;
 }
@@ -56,21 +55,24 @@ export function findConnection(username: string) {
     return conn;
 }
 
-export async function login(username: string, password: string, loginUrl?: string) {
-
+export function newConnection(username: string, password: string, loginUrl?: string) {
     let conn;
     if (loginUrl) {
         conn = new jsforce.Connection({loginUrl});
     } else {
         conn = new jsforce.Connection({});
     }
+    return conn;
+}
 
+export async function login(username: string, password: string, loginUrl?: string) {
+
+    const conn = newConnection(username, password, loginUrl);
     bluebird.promisifyAll(Object.getPrototypeOf(conn));
     const result = await conn.login(username, password);
     const authInfo: AuthInfo = {
+        connection: conn,
         username,
-        accessToken: conn.accessToken,
-        instanceUrl: conn.instanceUrl,
         userId: result.id,
         orgId: result.organizationId
     };

@@ -599,10 +599,11 @@ USAGE
   $ sfdx-cli-plugin adp:tooling:query
 
 OPTIONS
-  -a, --accesstoken=accesstoken                   (required) OAuth access token with bang (!) escaped
-  -e, --endpoint=endpoint                         (required) Salesforce SOAP API endpoint
   -m, --maxfetch=maxfetch                         Max records to fetch
+  -p, --password=password                         Salesforce password
   -q, --query=query                               (required) SOQL query string
+  -r, --loginurl=loginurl                         Use https://test.salesforce.com for sandbox
+  -u, --username=username                         Salesforce username
   --json                                          format output as json
   --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
 
