@@ -25,8 +25,9 @@ export default class Query extends SfdxCommand {
     protected static flagsConfig = {
         query: {type: 'string', char: 'q', required: true, description: 'SOQL query string'},
         maxfetch: {type: 'number', char: 'm', required: false, description: 'Max records to fetch'},
-        accesstoken: {type: 'string', char: 'a', required: true, description: 'OAuth access token with bang (!) escaped'},
-        endpoint: {type: 'string', char: 'e', required: true, description: 'Salesforce SOAP API endpoint'}
+        username: {char: 'u', type: 'string', description: 'Salesforce username'},
+        password: {char: 'p', type: 'password', description: 'Salesforce password'},
+        loginurl: {type: 'string', char: 'r', required: false, description: 'Use https://test.salesforce.com for sandbox'}
     };
 
     protected static requiresUsername = false;
@@ -39,12 +40,12 @@ export default class Query extends SfdxCommand {
         const records = [];
         const maxFetch = this.flags.maxfetch ? this.flags.maxfetch : 25;
 
-        const conn = authUtil.createConnection({
-            instanceUrl: this.flags.endpoint,
-            accessToken: this.flags.accesstoken.replace('\\!', '!')
-        });
+        const username = this.flags.username;
+        const password = this.flags.password;
+        const loginUrl = this.flags.loginurl;
+        const result = await authUtil.login(username, password, loginUrl);
 
-        await conn.tooling.query(query)
+        await result.connection.tooling.query(query)
             .on('record', record => {
                 records.push(record);
             })
