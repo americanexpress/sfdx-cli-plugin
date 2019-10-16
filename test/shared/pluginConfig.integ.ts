@@ -20,12 +20,12 @@ describe('---------- pluginConfig INTEG ----------', () => {
 
         it('returns merged global and local configs when no specific props specified', () => {
 
-            const globalConfigDir = `${process.env.HOME}/${consts.HIDDEN_DIR_NAME_GLOBAL}`;
+            const globalConfigDir = `${process.env.HOME}/${consts.GLOBAL_CONFIG_DIR}`;
             const projectDir = `${process.env.REPO}/sfdx-cli-plugin`;
             const configDirs = cfg.getConfigDirs();
             const result = cfg.get(configDirs);
             const globalConfigFile = `${globalConfigDir}/plugin-config.json`;
-            const projConfigFile = `${projectDir}/${consts.HIDDEN_DIR_NAME_LOCAL}`;
+            const projConfigFile = `${projectDir}/${consts.LOCAL_HIDDEN_DIR}`;
 
             expect(result.proxySettings, `${globalConfigFile}.proxySettings not found`).not.to.equal(undefined);
             expect(result.talendSettings, `${globalConfigFile}.talendSettings not found`).not.to.equal(undefined);
@@ -43,13 +43,13 @@ describe('---------- pluginConfig INTEG ----------', () => {
 
         it('result contains config data and error message if local config file not found', () => {
             const configDirs = {localConfigDir: '../dummyproject',
-                                globalConfigDir: `${process.env.REPO}/sfdx-cli-plugin/test/resources/.adp`};
+                                globalConfigDir: `${process.env.REPO}/sfdx-cli-plugin/test/resources/.epsf`};
             const result = cfg.get(configDirs);
             expect(result.errors[0]).to.equal('Configuration file not found: ../dummyproject/plugin-config.json');
         });
 
         it ('result contains config data and error message if global config file not found', () => {
-            const configDirs = {localConfigDir: `${process.env.REPO}/sfdx-cli-plugin/.adp`,
+            const configDirs = {localConfigDir: `${process.env.REPO}/sfdx-cli-plugin/.epsf`,
                                 globalConfigDir: '../dummyglobal'};
             const result = cfg.get(configDirs);
             expect(result.errors[0]).to.equal('Configuration file not found: ../dummyglobal/plugin-config.json');

@@ -248,25 +248,33 @@ export async function getDependencies(options: GetDependenciesOptions) {
     const mainPackage = pkgDir.package;
     const parentVersionNum = pkgDir.versionNumber;
     let deps = pkgDir.dependencies;
+
     if (!includeParent) {
-        deps = deps.filter(d => d.package !== `${mainPackage}_contracts`);
+        deps = deps.filter(d => d.package.indexOf(`${mainPackage}_contracts`) < 0);
     }
 
     let pkgVersions;
 
+    // Build the comma-delimited list of packages to query
+    const packageNames: string[] = new Array();
+    if (includeParent) {
+        packageNames.push(mainPackage);
+    }
+
+    for (const dep of deps) {
+        if (dep.versionNumber) {
+            packageNames.push(dep.package);
+        } else if (dep.package.indexOf('@')) {
+            const depParts = dep.package.split('@');
+            const pkgName = depParts[0];
+            const pkgVersion = depParts[1];
+            dep.package = pkgName;
+            dep.versionNumber = pkgVersion;
+            packageNames.push(dep.package);
+        }
+    }
+
     if (verbose) {
-
-        // Build the comma-delimited list of packages to query
-        const packageNames: string[] = new Array();
-        if (includeParent) {
-            packageNames.push(mainPackage);
-        }
-
-        for (const dep of deps) {
-            if (dep.versionNumber) {
-                packageNames.push(dep.package);
-            }
-        }
 
         // Retrieve package versions
         const pvListCmd = `sfdx force:package:version:list -p '${packageNames}' --json --concise`;

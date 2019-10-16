@@ -31,7 +31,7 @@
             "versionNumber": "1.0.0.LATEST"
           },
           {
-            "package": "d_trigger_monitor"
+            "package": "d_trigger_monitor@1.0.0.3"
           },
           {
             "package": "d_utilities_contracts"

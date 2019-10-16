@@ -23,7 +23,7 @@ export REPO=/Users/yourusername/dev/
 ```
 
 ## Step 5. Add a global config
-For configuration values across all projects, create the file **$HOME/.adp/plugin-config.json**.
+For configuration values across all projects, create the file **$HOME/.epsf/plugin-config.json**.
 An example is shown below.
 ```javascript
 {

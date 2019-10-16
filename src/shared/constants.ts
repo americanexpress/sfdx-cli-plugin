@@ -11,8 +11,12 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-export const HIDDEN_DIR_NAME_GLOBAL: string = '.adp';
-export const HIDDEN_DIR_NAME_LOCAL: string = '.adp';
+
+// Location of global plugin-config.json relative to HOME dir
+export const GLOBAL_CONFIG_DIR: string = '.epsf/dependencies/sfdx-cli-plugin';
+
+// Location of local plugin-config.json relative to project root
+export const LOCAL_HIDDEN_DIR: string = '.epsf';
 
 export const ORG_TYPE_SANDBOX = 'sandbox';
 export const ORG_TYPE_DEVHUB = 'devhub';

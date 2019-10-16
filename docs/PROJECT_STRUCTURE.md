@@ -1,5 +1,5 @@
 # Project Structure
-## /.adp
+## /.epsf
 Hidden folder containing project-level config and referenced by the tests.  If missing, this folder will be created by the tests.
 
 ## /docs

@@ -15,16 +15,17 @@ import { SfdxCommand } from '@salesforce/command';
 import { SfdxProject } from '@salesforce/core';
 import * as util from 'util';
 import * as cli from '../../../shared/cliCommand';
+import * as consts from '../../../shared/constants';
 
 export default class Run extends SfdxCommand {
     public static description = 'Runs shell script';
 
     public static examples = [
         `sfdx adp:shell:run
-        // Runs <project>/.adp/bash/build.sh
+        // Runs <project>/.epsf/bash/build.sh
         `,
         `sfdx adp:shell:run -f "test.sh"
-        // Runs shell script from <project>/.adp/bash
+        // Runs shell script from <project>/.epsf/bash
         `,
         `sfdx adp:shell:run -f "test/resources/bash/test.sh"
         // Runs the specified shell script (outside of DX project)
@@ -82,7 +83,7 @@ export function buildCommand(projectPath: string, flags): cli.CLICommand {
         }
     } else {
         // In DX project
-        const bashPath = `${projectPath}/.adp/bash`;
+        const bashPath = `${projectPath}/${consts.LOCAL_HIDDEN_DIR}/bash`;
         if (util.isNullOrUndefined(flags.file)) {
             // No file set
             scriptFile = `${bashPath}/build.sh`;
