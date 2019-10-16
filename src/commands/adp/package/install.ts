@@ -102,7 +102,7 @@ export default class Install extends SfdxCommand {
                 // Install or upgrade the package
                 const versionOrId = isNullOrUndefined(pkgVersion.installationVersion) ? pkgVersion.installationVersionId : `v${pkgVersion.installationVersion}`;
                 process.stdout.write(`Installing ${pkgVersion.name} ${versionOrId} ${releasedStr}... `);
-                const installCmd = `sfdx force:package:install -r -p ${pkgVersion.installationVersionId} -u ${username} --json --wait 20`;
+                const installCmd = `sfdx force:package:install -r -p ${pkgVersion.installationVersionId} -u ${username} --json --wait 5`;
                 let installRespJson;
                 try {
                     installRespJson = childproc.execSync(installCmd, { encoding: 'utf8', stdio: 'pipe'});
