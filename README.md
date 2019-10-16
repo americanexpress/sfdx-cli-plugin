@@ -183,11 +183,18 @@ USAGE
 
 OPTIONS
   -a, --allpackages                               All packages, not just dependencies
-  -l, --forcelatest                               forces install of UN-released, latest package
+
+  -b, --versionbias=(Latest|Released)             Type of bias to use when determining package versions
+                                                  (Latest|Released)
+
   -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
+
   --apiversion=apiversion                         override the api version used for api requests made by this command
+
   --json                                          format output as json
+
   --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+
   --noprompt                                      disables all prompts
 
 EXAMPLES
@@ -200,14 +207,13 @@ _See code: [src/commands/adp/package/install.ts](https://github.com/americanexpr
 
 ## `sfdx-cli-plugin adp:package:installed:list`
 
-Lists install status of a package and all its dependencies
+Compares install package versions with version specified in sfdx-project.json
 
 ```
 USAGE
   $ sfdx-cli-plugin adp:package:installed:list
 
 OPTIONS
-  -a, --allpackages                               All packages, not just dependencies
   -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
   --apiversion=apiversion                         override the api version used for api requests made by this command
   --json                                          format output as json
@@ -229,10 +235,15 @@ USAGE
   $ sfdx-cli-plugin adp:package:list
 
 OPTIONS
-  -a, --allpackages                               All packages, not just dependencies
-  -l, --latest                                    display latest when verbose option chosen
+  -a, --allpackages                               all packages, not just dependencies
+
+  -b, --versionbias=(Latest|Released)             type of bias to use when determining package versions
+                                                  (Latest|Released)
+
   -v, --verbose                                   display extended package version details
+
   --json                                          format output as json
+
   --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
 
 EXAMPLES
@@ -588,10 +599,11 @@ USAGE
   $ sfdx-cli-plugin adp:tooling:query
 
 OPTIONS
-  -a, --accesstoken=accesstoken                   (required) OAuth access token with bang (!) escaped
-  -e, --endpoint=endpoint                         (required) Salesforce SOAP API endpoint
   -m, --maxfetch=maxfetch                         Max records to fetch
+  -p, --password=password                         Salesforce password
   -q, --query=query                               (required) SOQL query string
+  -r, --loginurl=loginurl                         Use https://test.salesforce.com for sandbox
+  -u, --username=username                         Salesforce username
   --json                                          format output as json
   --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
 

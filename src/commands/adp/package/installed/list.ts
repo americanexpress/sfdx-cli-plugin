@@ -17,7 +17,7 @@ import pkg = require('../../../../helpers/packageHelper');
 import * as org from '../../../../shared/orgUtil';
 
 export default class List extends SfdxCommand {
-    public static description = 'Lists install status of a package and all its dependencies';
+    public static description = 'Compares install package versions with version specified in sfdx-project.json';
 
     public static examples = [
         `sfdx adp:package:installed:list -u xfrom1
@@ -25,9 +25,7 @@ export default class List extends SfdxCommand {
         `
     ];
 
-    protected static flagsConfig = {
-        allpackages: { char: 'a', type: 'boolean', default: false, description: 'All packages, not just dependencies'}
-    };
+    protected static flagsConfig = {};
 
     protected static requiresUsername = true;
     protected static requiresProject = true;
@@ -35,20 +33,19 @@ export default class List extends SfdxCommand {
     // tslint:disable-next-line:no-any
     public async run(): Promise<any> {
 
-        const includeParent = this.flags.allpackages;
+        const includeParent = true;
         const username = this.org.getUsername();
         const alias = org.getAliasByUsername(username);
-        const forceLatest = true;
 
-        this.ux.startSpinner(chalk.gray('Retrieving package versions for the current project'));
+        process.stdout.write('Retrieving package versions for the current project... ');
         const projectJsonObj = await pkg.getProjectJson();
         const dependencies = await pkg.getDependencies({
                                 projectJson: projectJsonObj,
                                 includeParent,
                                 verbose: true,
-                                latestVersions: forceLatest
+                                versionBias: null
                             });
-        this.ux.stopSpinner(chalk.gray('done.'));
+        this.ux.log('done.');
 
         // TODO: Factor this out of the package commands and add to messages.
         if (dependencies === undefined) {
@@ -57,9 +54,9 @@ export default class List extends SfdxCommand {
         }
 
         // Retrieve list of installed dependencies based on sfdx-project.json
-        this.ux.startSpinner(chalk.gray(`Retrieving installed packages from ${chalk.magenta(alias)}`));
+        process.stdout.write(`Retrieving installed packages from ${chalk.magenta(alias)}... `);
         const installedDepends = await pkg.getInstalledDependencies(dependencies, username);
-        this.ux.stopSpinner(chalk.gray('done.'));
+        this.ux.log('done.');
 
         // Create the table to display
         const table: pkg.TableData = pkg.buildInstalledTable(installedDepends);
