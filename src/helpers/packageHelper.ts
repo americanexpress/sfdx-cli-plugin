@@ -301,7 +301,13 @@ export async function getDependencies(options: GetDependenciesOptions) {
 
             let pkgVersionResp;
             const noInherit = true;
-            pkgVersionResp = cliCmd.runCmd(pvListCmd, noInherit);
+            try {
+                pkgVersionResp = cliCmd.runCmd(pvListCmd, noInherit);
+            } catch (err) {
+                console.log(chalk.red('Command failed. Set SYSTEM_DEBUG=true for more details.'));
+                const errorResult: PackageVersionInfo[] = new Array();
+                return errorResult;
+            }
             pkgVersions = JSON.parse(pkgVersionResp);
         }
 
