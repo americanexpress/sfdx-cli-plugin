@@ -25,7 +25,9 @@ export default class List extends SfdxCommand {
         `
     ];
 
-    protected static flagsConfig = {};
+    protected static flagsConfig = {
+        allpackages: { char: 'a', type: 'boolean', default: false, description: 'All packages, not just dependencies'}
+    };
 
     protected static requiresUsername = true;
     protected static requiresProject = true;
@@ -33,7 +35,7 @@ export default class List extends SfdxCommand {
     // tslint:disable-next-line:no-any
     public async run(): Promise<any> {
 
-        const includeParent = true;
+        const includeParent: boolean = this.flags.allpackages;
         const username = this.org.getUsername();
         const alias = org.getAliasByUsername(username);
 
