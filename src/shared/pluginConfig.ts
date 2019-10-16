@@ -30,8 +30,7 @@ export interface ConfigDirOpts {
 
 /**
  * Gets the absolute paths to the global and local configuration directories
- * @param localOnly Only return the local config directory
- * @param globalOnly Only return the global config directory
+ * @param opts Options for this function if desired
  * @returns PluginConfigDirs object
  */
 export function getConfigDirs(opts?: ConfigDirOpts): PluginConfigDirs {
