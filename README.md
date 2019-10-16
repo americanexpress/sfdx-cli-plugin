@@ -214,6 +214,7 @@ USAGE
   $ sfdx-cli-plugin adp:package:installed:list
 
 OPTIONS
+  -a, --allpackages                               All packages, not just dependencies
   -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
   --apiversion=apiversion                         override the api version used for api requests made by this command
   --json                                          format output as json
