@@ -1,6 +1,6 @@
 # Project Structure
-## /.adp
-Hidden folder containing project-level config and referenced by the tests.  If missing, this folder will be created by the tests.
+## src/globals.js
+Contains global variables for configuring the plugin
 
 ## /docs
 With the exception of README.md, all documentation belongs in this folder.

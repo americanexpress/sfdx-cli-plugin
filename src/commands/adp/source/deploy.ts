@@ -13,6 +13,7 @@
  */
 import { SfdxCommand } from '@salesforce/command';
 import * as fs from 'fs';
+import * as g from '../../../globals';
 import * as apexUtil from '../../../shared/apexUtil';
 import * as cli from '../../../shared/cliCommand';
 import * as fileUtil from '../../../shared/fileUtil';
@@ -65,7 +66,7 @@ export default class Deploy extends SfdxCommand {
         // Override command with bash script if one has been configured
         if (_override) {
             _override.encloseInQuotes = true;
-            let argStr = `-u ${this.org.getUsername()}`;
+            let argStr = `-u ${this.org.getUsername()} -m ${g.META_DIRNAME}`;
             argStr = this.flags.checkonly ? `${argStr} -c` : argStr;
             argStr = testLevel ? `${argStr} -l ${testLevel}` : argStr;
             argStr = this.flags.debugmode ? `${argStr} -b ${this.flags.debugmode}` : argStr;

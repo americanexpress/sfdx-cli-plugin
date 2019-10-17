@@ -77,6 +77,7 @@ describe('---------- cliCommand UNIT ----------', () => {
         });
 
         it ('calls console.log with correct message prior to executing the command', () => {
+            process.env.SYSTEM_DEBUG = 'true';
             cli.runCmd('testcommand force:org:list');
             expect(spiedInfo.calledWith('Running CLI command: testcommand force:org:list')).to.equal(true);
         });

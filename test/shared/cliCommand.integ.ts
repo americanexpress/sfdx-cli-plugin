@@ -20,9 +20,9 @@ describe('---------- cliCommand INTEG ----------', () => {
 
         it('gets the override value from commandOverrides setting if exists', async () => {
 
-            await fileUtil.copyDir('test/resources/.adp', './.adp');
-            const result = cli.getOverride('/full/path/to/adp/source/deploy.ts');
-            expect(result.commandString).to.equal('$REPO/sfdx-cli-plugin/resources/bash/build.sh');
+            await fileUtil.copyDir('test/resources/.epsf', './.epsf');
+            const result = cli.getOverride('/full/path/to/adp/source/deploy.ts'); // command derived from this path
+            expect(result.commandString).to.equal('~/.epsf/dependencies/sfdx-cli-plugin/resources/bash/build.sh');
         });
     });
 });

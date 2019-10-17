@@ -14,13 +14,12 @@
 import * as bluebird from 'bluebird';
 import * as fs from 'fs-extra';
 import * as jsforce from 'jsforce';
-import * as consts from './constants';
+import * as g from '../globals';
 import * as fileUtil from './fileUtil';
 
 export interface AuthInfo {
     username: string;
-    accessToken: string;
-    instanceUrl: string;
+    connection: jsforce.Connection;
     userId: string;
     orgId: string;
 }
@@ -41,12 +40,12 @@ export function createConnection(input?: ConnInfo): jsforce.Connection {
 }
 
 export function persistCredentials(credentials: AuthInfo) {
-    const filePath = `${process.env.HOME}/${consts.HIDDEN_DIR_NAME_GLOBAL}/${credentials.username}`;
+    const filePath = `${g.GLOBAL_CONFIG_DIR}/${credentials.username}`;
     fileUtil.writeObjectToFile(filePath, credentials);
 }
 
 export function findConnection(username: string) {
-    const filePath = `${process.env.HOME}/${consts.HIDDEN_DIR_NAME_GLOBAL}/${username}`;
+    const filePath = `${g.GLOBAL_CONFIG_DIR}/${username}`;
     const jsonString: string = fs.readFileSync(filePath, { encoding: 'utf-8' });
     const creds = JSON.parse(jsonString);
     const conn = new jsforce.Connection({
@@ -56,21 +55,24 @@ export function findConnection(username: string) {
     return conn;
 }
 
-export async function login(username: string, password: string, loginUrl?: string) {
-
+export function newConnection(username: string, password: string, loginUrl?: string) {
     let conn;
     if (loginUrl) {
         conn = new jsforce.Connection({loginUrl});
     } else {
         conn = new jsforce.Connection({});
     }
+    return conn;
+}
 
+export async function login(username: string, password: string, loginUrl?: string) {
+
+    const conn = newConnection(username, password, loginUrl);
     bluebird.promisifyAll(Object.getPrototypeOf(conn));
     const result = await conn.login(username, password);
     const authInfo: AuthInfo = {
+        connection: conn,
         username,
-        accessToken: conn.accessToken,
-        instanceUrl: conn.instanceUrl,
         userId: result.id,
         orgId: result.organizationId
     };

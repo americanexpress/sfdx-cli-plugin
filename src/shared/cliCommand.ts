@@ -48,7 +48,7 @@ export function runAll(commands: CLICommand[], runner?) {
 export function run(cmd: CLICommand, runner?) {
     let commandStr = cmd.commandString;
 
-    commandStr = path.normalize(commandStr.replace('$REPO', process.env.REPO));
+    commandStr = path.normalize(commandStr.replace('$REPO', process.env.REPO).replace('~', process.env.HOME));
 
     if (cmd.encloseInQuotes) {
         commandStr = `"${commandStr}"`;
@@ -64,8 +64,15 @@ export function run(cmd: CLICommand, runner?) {
     }
 }
 
+/**
+ * Synchronously executes a command
+ * @param command the command (e.g. dx command) to execute
+ * @param noInherit boolean flag to omit stdio: 'inherit' option when calling execSync
+ */
 export function runCmd(command: string, noInherit?: boolean) {
-    info(`Running CLI command: ${command}`);
+    if (process.env.SYSTEM_DEBUG === 'true') {
+        info(`Running CLI command: ${command}`);
+    }
     let retVal;
     if (!command.startsWith('testcommand')) {
         if (noInherit) {

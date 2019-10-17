@@ -30,8 +30,9 @@ export default class List extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        allpackages: { char: 'a', type: 'boolean', default: false, description: 'All packages, not just dependencies'},
-        latest: { char: 'l', type: 'boolean', default: false, description: 'display latest when verbose option chosen'},
+        allpackages: { char: 'a', type: 'boolean', default: false, description: 'all packages, not just dependencies'},
+        versionbias: { char: 'b', type: 'enum', description: 'type of bias to use when determining package versions (Latest|Released)',
+                options: ['Latest', 'Released']},
         verbose: { char: 'v', type: 'boolean', default: false, description: 'display extended package version details' }
     };
 
@@ -47,7 +48,7 @@ export default class List extends SfdxCommand {
         const dependencies = await pkg.getDependencies({
             projectJson: projectJsonObj,
             includeParent,
-            latestVersions: this.flags.latest,
+            versionBias: this.flags.versionbias,
             verbose: this.flags.verbose
         });
         this.ux.stopSpinner('done.');
@@ -67,7 +68,9 @@ export default class List extends SfdxCommand {
         }
 
         this.ux.table(table.rows, table.options);
-
+        if (dependencies.findIndex(p => p.id.indexOf('0Ho') > -1) > -1) {
+            this.ux.log(chalk.yellow('It is recommended to use the "04t" ID to specify all dependency versions.'));
+        }
         return dependencies;
     }
 }

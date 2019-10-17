@@ -31,10 +31,14 @@
             "versionNumber": "1.0.0.LATEST"
           },
           {
-            "package": "d_trigger_monitor"
+            "package": "d_trigger_monitor@1.0.0.3"
           },
           {
-            "package": "d_utilities_contracts"
+            "package": "package_with_versioned_alias_and_version@1.2.3.4",
+            "versionNumber": "2.3.4.5"
+          },
+          {
+            "package": "d_utilities_contracts@1.0.0.2"
           },
           {
             "package": "d_utilities",
@@ -57,7 +61,8 @@
       "d_exception_helper_contracts": "0Ho46000000001sCAA",
       "d_trigger_monitor@1.0.0.3": "04t460000006MLsAAM",
       "d_utilities_contracts@1.0.0.2": "04t46000001XaNvAAK",
-      "d_utilities": "0Ho46000000001YCAQ"
+      "d_utilities": "0Ho46000000001YCAQ",
+      "package_with_versioned_alias_and_version@1.2.3.4": "04t4600000ABCD1234"
     },
     "namespace": "",
     "sfdcLoginUrl": "https://login.salesforce.com",

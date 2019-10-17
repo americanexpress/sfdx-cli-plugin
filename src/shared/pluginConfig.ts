@@ -13,7 +13,7 @@
  */
 import * as path from 'path';
 import { isUndefined } from 'util';
-import * as consts from './constants';
+import * as g from '../globals';
 import * as jsonUtil from './jsonUtil';
 
 export interface PluginConfigDirs {
@@ -29,26 +29,25 @@ export interface ConfigDirOpts {
 
 /**
  * Gets the absolute paths to the global and local configuration directories
- * @param localOnly Only return the local config directory
- * @param globalOnly Only return the global config directory
+ * @param opts Options for this function if desired
  * @returns PluginConfigDirs object
  */
 export function getConfigDirs(opts?: ConfigDirOpts): PluginConfigDirs {
-    const localHiddenDir: string = `${process.env.PWD}/${consts.HIDDEN_DIR_NAME_LOCAL}`;
-    const globalHiddenDir: string = `${process.env.HOME}/${consts.HIDDEN_DIR_NAME_GLOBAL}`;
-    const appConfigDir: string = path.normalize(`${process.env.REPO}/sfdx-cli-plugin/config`);
+    const localHiddenDir: string = `${process.env.PWD}/${g.LOCAL_HIDDEN_DIR}`;
+    const globalConfigDir: string = path.normalize(`${g.GLOBAL_CONFIG_DIR}`);
+    const appConfigDir: string = path.normalize(`${globalConfigDir}/config`);
     let configDirs: PluginConfigDirs = {localConfigDir: localHiddenDir,
-                                        globalConfigDir: globalHiddenDir,
+                                        globalConfigDir,
                                         appConfigDir};
 
     if (opts) {
         if (!opts.localOnly && !opts.globalOnly || opts.localOnly && opts.globalOnly) {
             configDirs = {localConfigDir: localHiddenDir,
-                            globalConfigDir: globalHiddenDir};
+                            globalConfigDir};
         } else if (opts.localOnly) {
             configDirs = {localConfigDir: localHiddenDir};
         } else if (opts.globalOnly) {
-            configDirs = {globalConfigDir: globalHiddenDir};
+            configDirs = {globalConfigDir};
         }
     }
     return configDirs;

@@ -20,19 +20,19 @@ describe('---------- adp:shell:run ----------', () => {
         it ('has commandString set to <projectbashpath>/build.sh when in project and file not specified', () => {
 
             const result = buildCommand('/my/project/path', { file: null });
-            expect(result.commandString).to.equal('/my/project/path/.adp/bash/build.sh');
+            expect(result.commandString).to.equal('/my/project/path/.epsf/bash/build.sh');
         });
 
         it ('has commandString set to <projectbashpath>/<bashfile> when in project and file specified', () => {
 
             const result = buildCommand('/my/project/path', { file: 'test.sh'});
-            expect(result.commandString).to.equal('/my/project/path/.adp/bash/test.sh');
+            expect(result.commandString).to.equal('/my/project/path/.epsf/bash/test.sh');
         });
 
         it ('has commandString set to "<projectbashpath>/<bashfile>" arg1 arg2 when arguments specified', () => {
 
             const result = buildCommand('/my/project/path', {file: 'test.sh', args: 'arg1 arg2'});
-            expect(result.commandString).to.equal('/my/project/path/.adp/bash/test.sh');
+            expect(result.commandString).to.equal('/my/project/path/.epsf/bash/test.sh');
             expect(result.args[0]).to.equal('arg1 arg2');
         });
 

@@ -23,7 +23,8 @@ export REPO=/Users/yourusername/dev/
 ```
 
 ## Step 5. Add a global config
-For configuration values across all projects, create the file **$HOME/.adp/plugin-config.json**.
+For configuration values across all projects, create the file **$HOME/<metadirname>/plugin-config.json**
+where **metadirname** is defined in src/globals.js
 An example is shown below.
 ```javascript
 {
@@ -43,13 +44,17 @@ An example is shown below.
     },
     "restrictedOrgs": [
         "releaseuser@myorg.com",
-            "releaseuser@myorg.com.sit",
-            "releaseuser@myorg.com.uat"
+        "releaseuser@myorg.com.sit",
+        "releaseuser@myorg.com.uat"
     ]
 }
 ```
+## Step 6. Add a local project config
+For configuration specific to a single DX project, create the file **<metadirname>/plugin-config.json** in the project root, where **metadirname** is defined in src/globals.js.
 
-## Step 6. Link the plugin to SFDX.
+See plugin-config-sample.json in the root of this project as an example. It can be split into global and local configs as needed.
+
+## Step 7. Link the plugin to SFDX.
 Use the following command to complete the installation.
 ```bash
 sfdx plugins:link <path to project>
