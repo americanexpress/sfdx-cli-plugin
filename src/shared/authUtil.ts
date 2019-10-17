@@ -14,7 +14,7 @@
 import * as bluebird from 'bluebird';
 import * as fs from 'fs-extra';
 import * as jsforce from 'jsforce';
-import * as consts from './constants';
+import * as g from '../globals';
 import * as fileUtil from './fileUtil';
 
 export interface AuthInfo {
@@ -40,12 +40,12 @@ export function createConnection(input?: ConnInfo): jsforce.Connection {
 }
 
 export function persistCredentials(credentials: AuthInfo) {
-    const filePath = `${process.env.HOME}/${consts.GLOBAL_CONFIG_DIR}/${credentials.username}`;
+    const filePath = `${g.GLOBAL_CONFIG_DIR}/${credentials.username}`;
     fileUtil.writeObjectToFile(filePath, credentials);
 }
 
 export function findConnection(username: string) {
-    const filePath = `${process.env.HOME}/${consts.GLOBAL_CONFIG_DIR}/${username}`;
+    const filePath = `${g.GLOBAL_CONFIG_DIR}/${username}`;
     const jsonString: string = fs.readFileSync(filePath, { encoding: 'utf-8' });
     const creds = JSON.parse(jsonString);
     const conn = new jsforce.Connection({

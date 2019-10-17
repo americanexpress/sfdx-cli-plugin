@@ -1,30 +1,40 @@
 {
-  "commandOverrides": [
-    {
-      "command": "adp:source:deploy",
-      "overrideWith": {
-        "commandString": "~/sfdx-cli-plugin/resources/bash/build.sh",
-        "args": []
-      }
-    }
-  ],
-  "proxySettings": {
-    "httpProxyHost": "your.proxyhost.name",
-    "httpProxyPort": "8888"
-  },
-  "talendSettings": {
-    "dataOrgUsername": "username.to@salesforce.org.containing.data",
-    "jarDir": "/abs/path/to/talend/jar/files/",
-    "jarDependenciesDir": "/abs/path/to/talend/jar/files/lib/",
-    "projectDir": "rel/path/to/data/dir",
-    "talendProjectName": "yourtalendproject",
-    "orgSetupDataClass": "classtosetupscratchorg",
-    "soapApiVersion": "46.0",
-    "uberJar": "talend.jar"
-  },
-  "restrictedOrgs": [
-    "prod@yourorg",
-    "username1@yourorg.sandbox1",
-    "username2@yourorg.username2"
-  ]
+    "commandOverrides": [
+        {
+            "command": "adp:source:deploy",
+            "overrideWith": {
+                "commandString": "~/sfdx-cli-plugin/resources/bash/build.sh",
+                "args": []
+            }
+        }
+    ],
+    "metadataTransforms": [
+        {
+            "title": "Remove userPermissions from Admin profile",
+            "operation": "removeElements",
+            "pattern": "**/profiles/*.profile-meta.xml",
+            "nodeName": "userPermissions",
+            "isActive": true,
+            "maxDepth": 5
+        }
+    ],
+    "proxySettings": {
+        "httpProxyHost": "your.proxyhost.name",
+        "httpProxyPort": "8888"
+    },
+    "talendSettings": {
+        "dataOrgUsername": "username.to@salesforce.org.containing.data",
+        "jarDir": "/abs/path/to/talend/jar/files/",
+        "jarDependenciesDir": "/abs/path/to/talend/jar/files/lib/",
+        "projectDir": "rel/path/to/data/dir",
+        "talendProjectName": "yourtalendproject",
+        "orgSetupDataClass": "classtosetupscratchorg",
+        "soapApiVersion": "46.0",
+        "uberJar": "talend.jar"
+    },
+    "restrictedOrgs": [
+        "prod@yourorg",
+        "username1@yourorg.sandbox1",
+        "username2@yourorg.username2"
+    ]
 }

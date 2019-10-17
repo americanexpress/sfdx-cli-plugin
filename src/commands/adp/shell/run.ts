@@ -14,8 +14,8 @@
 import { SfdxCommand } from '@salesforce/command';
 import { SfdxProject } from '@salesforce/core';
 import * as util from 'util';
+import * as g from '../../../globals';
 import * as cli from '../../../shared/cliCommand';
-import * as consts from '../../../shared/constants';
 
 export default class Run extends SfdxCommand {
     public static description = 'Runs shell script';
@@ -83,7 +83,7 @@ export function buildCommand(projectPath: string, flags): cli.CLICommand {
         }
     } else {
         // In DX project
-        const bashPath = `${projectPath}/${consts.LOCAL_HIDDEN_DIR}/bash`;
+        const bashPath = `${projectPath}/${g.LOCAL_HIDDEN_DIR}/bash`;
         if (util.isNullOrUndefined(flags.file)) {
             // No file set
             scriptFile = `${bashPath}/build.sh`;

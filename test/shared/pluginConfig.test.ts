@@ -12,7 +12,7 @@
  * the License.
  */
 import { expect } from '@salesforce/command/dist/test';
-import * as consts from '../../src/shared/constants';
+import * as g from '../../src/globals';
 import * as cfg from '../../src/shared/pluginConfig';
 import { ConfigDirOpts } from '../../src/shared/pluginConfig';
 
@@ -87,8 +87,8 @@ describe('---------- pluginConfig UNIT ----------', () => {
         let globalHiddenDir: string;
 
         before('set local and global config directories', () => {
-            localHiddenDir = `${process.env.PWD}/${consts.LOCAL_HIDDEN_DIR}`;
-            globalHiddenDir = `${process.env.HOME}/${consts.GLOBAL_CONFIG_DIR}`;
+            localHiddenDir = `${process.env.PWD}/${g.LOCAL_HIDDEN_DIR}`;
+            globalHiddenDir = `${g.GLOBAL_CONFIG_DIR}`;
         });
 
         it('returns both config directories when no options passed', () => {

@@ -11,8 +11,16 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
+import * as os from 'os';
 
-export const ORG_TYPE_SANDBOX = 'sandbox';
-export const ORG_TYPE_DEVHUB = 'devhub';
-export const ORG_TYPE_SCRATCH = 'scratch';
-export const ORG_TYPE_NOTFOUND = 'notfound';
+/**
+ * Folder name for application metadata, e.g. .sfdx-cli-plugin .
+ * This folder will be created in the project root as well as in the user's home directory.
+ */
+export const META_DIRNAME = '.epsf';
+
+// Location of global plugin-config.json relative to HOME dir
+export const GLOBAL_CONFIG_DIR: string = `${os.homedir()}/${META_DIRNAME}/dependencies/sfdx-cli-plugin`;
+
+// Location of local plugin-config.json relative to project root
+export const LOCAL_HIDDEN_DIR: string = `${META_DIRNAME}`;
