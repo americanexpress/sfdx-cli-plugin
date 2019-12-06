@@ -94,8 +94,13 @@ export function hasOverride(commandFile: string, config) {
     return retVal;
 }
 
+/**
+ * Converts a command code file path to an sfdx command string
+ * @param filePath Path to the command code file
+ * @returns sfdx command string, e.g. adp:source:deploy
+ */
 function fileToCommand(filePath: string): string {
-    return filePath.slice(filePath.indexOf('/adp/') + 1, filePath.indexOf('.')).replace(/\//g, ':');
+    return filePath.slice(filePath.indexOf('/adp/') + 1, filePath.lastIndexOf('.')).replace(/\//g, ':');
 }
 
 /**
