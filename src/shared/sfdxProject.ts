@@ -22,6 +22,7 @@ export interface ProjectJsonPackage {
     isVersionIdSpecified: boolean;
     releasedVersion?: string;
     latestVersion?: string;
+    dependencies?: [];
 }
 
 export function getMainPackage(projectJson) {
@@ -35,7 +36,8 @@ export function getMainPackage(projectJson) {
         isVersionIdSpecified: null,
         versionNumber: defaultPackageDir.versionNumber,
         isMainPackage: true,
-        isMainContractPackage: false
+        isMainContractPackage: false,
+        dependencies: defaultPackageDir.dependencies
     };
     return pkg;
 }

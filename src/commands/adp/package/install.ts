@@ -18,6 +18,7 @@ import * as inquirer from 'inquirer';
 import { isNullOrUndefined } from 'util';
 import pkg = require('../../../helpers/packageHelper');
 import * as org from '../../../shared/orgUtil';
+import * as proj from '../../../shared/sfdxProject';
 
 export default class Install extends SfdxCommand {
     public static description = 'Installs the current package and/or its dependencies';
@@ -68,6 +69,13 @@ export default class Install extends SfdxCommand {
         const verbose = true;
         console.log('Retrieving package versions');
         const projectJsonObj = await pkg.getProjectJson();
+
+        const mainProject = proj.getMainPackage(projectJsonObj);
+        if (mainProject.dependencies === undefined || mainProject.dependencies.length === 0) {
+            console.log('No dependencies found');
+            return;
+        }
+
         const dependencies = await pkg.getDependencies({
             projectJson: projectJsonObj,
             includeParent,
@@ -98,7 +106,6 @@ export default class Install extends SfdxCommand {
                 // Skip the install
                 this.ux.log(`Skipped ${pkgVersion.name} v${pkgVersion.installedVersion} ${releasedStr}. Already installed.`);
             } else {
-                // Install or upgrade the package
                 // Install or upgrade the package
                 const versionOrId = isNullOrUndefined(pkgVersion.installationVersion) ? pkgVersion.installationVersionId : `v${pkgVersion.installationVersion}`;
                 process.stdout.write(`Installing ${pkgVersion.name} ${versionOrId} ${releasedStr}... `);
