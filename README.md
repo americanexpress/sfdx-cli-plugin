@@ -601,16 +601,16 @@ USAGE
 
 OPTIONS
   -m, --maxfetch=maxfetch                         Max records to fetch
-  -p, --password=password                         Salesforce password
+  -p, --password=password                         (required) Salesforce password
   -q, --query=query                               (required) SOQL query string
   -r, --loginurl=loginurl                         Use https://test.salesforce.com for sandbox
-  -u, --username=username                         Salesforce username
+  -u, --username=username                         (required) Salesforce username
   --json                                          format output as json
   --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
 
 EXAMPLES
-  sfdx adp:tooling:query -e https://myinstance.com -a myaccesstoken -q "SELECT id FROM SandboxInfo"
-  sfdx adp:tooling:query -e https://myinstance.com -a myaccesstoken -q "SELECT id FROM SandboxInfo" -m 100
+  sfdx adp:tooling:query -u USERNAME -p PASSWORD -q "SELECT id FROM SandboxInfo"
+  sfdx adp:tooling:query -r https://test.salesforce.com -u USERNAME -p PASSWORD -q "SELECT id FROM SandboxInfo" -m 100
 ```
 
 _See code: [src/commands/adp/tooling/query.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.4/src/commands/adp/tooling/query.ts)_
