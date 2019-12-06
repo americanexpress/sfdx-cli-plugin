@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import * as pluginConfig from '../../../shared/pluginConfig';
 import { ConfigDirOpts } from '../../../shared/pluginConfig';
 
@@ -26,8 +26,8 @@ export default class Show extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        globalonly: { char: 'g', type: 'boolean', description: 'show global config only' },
-        localonly: { char: 'l', type: 'boolean', description: 'show local config only'}
+        globalonly: flags.boolean({ char: 'g', description: 'show global config only' }),
+        localonly: flags.boolean({ char: 'l', description: 'show local config only'})
     };
 
     protected static requiresUsername = false;

@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import * as fs from 'fs';
 import * as g from '../../../globals';
 import * as apexUtil from '../../../shared/apexUtil';
@@ -41,18 +41,18 @@ export default class Deploy extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        debugmode: {type: 'boolean', char: 'b', required: false, default: false,
-                            description: 'performs mdapi conversion but skips deployment'},
-        checkonly: {type: 'boolean', char: 'c', required: false, default: false,
-                            description: 'validate deploy but don’t save to the org'},
-        noanonymous: {type: 'boolean', required: false, default: false,
-                        description: 'exclude pre and post anonymous Apex execution commands (excluded from override)'},
-        nodestructives: {type: 'boolean', required: false, default: false,
-                        description: 'exclude pre and post destructive commands (excluded from override)'},
-        nomain: {type: 'boolean', required: false, default: false,
-                            description: 'exclude main payload deployment'},
-        testlevel: {type: 'string', char: 'l', required: false, default: 'RunAllTestsInOrg',
-                    description: 'NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg'}
+        debugmode: flags.boolean({char: 'b', required: false, default: false,
+                            description: 'performs mdapi conversion but skips deployment'}),
+        checkonly: flags.boolean({char: 'c', required: false, default: false,
+                            description: 'validate deploy but don’t save to the org'}),
+        noanonymous: flags.boolean({required: false, default: false,
+                        description: 'exclude pre and post anonymous Apex execution commands (excluded from override)'}),
+        nodestructives: flags.boolean({required: false, default: false,
+                        description: 'exclude pre and post destructive commands (excluded from override)'}),
+        nomain: flags.boolean({required: false, default: false,
+                            description: 'exclude main payload deployment'}),
+        testlevel: flags.string({char: 'l', required: false, default: 'RunAllTestsInOrg',
+                    description: 'NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg'})
     };
 
     protected static requiresUsername = true;

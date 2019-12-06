@@ -46,95 +46,110 @@ Command Summary
 <!-- usage -->
 ```sh-session
 $ npm install -g sfdx-cli-plugin
-$ sfdx-cli-plugin COMMAND
+$ sfdx COMMAND
 running command...
-$ sfdx-cli-plugin (-v|--version|version)
+$ sfdx (-v|--version|version)
 sfdx-cli-plugin/0.0.5 darwin-x64 node-v11.13.0
-$ sfdx-cli-plugin --help [COMMAND]
+$ sfdx --help [COMMAND]
 USAGE
-  $ sfdx-cli-plugin COMMAND
+  $ sfdx COMMAND
 ...
 ```
 <!-- usagestop -->
 <!-- commands -->
-* [`sfdx-cli-plugin adp:apex:execute`](#sfdx-cli-plugin-adpapexexecute)
-* [`sfdx-cli-plugin adp:auth:soap:login`](#sfdx-cli-plugin-adpauthsoaplogin)
-* [`sfdx-cli-plugin adp:config:show`](#sfdx-cli-plugin-adpconfigshow)
-* [`sfdx-cli-plugin adp:data:run`](#sfdx-cli-plugin-adpdatarun)
-* [`sfdx-cli-plugin adp:package:install`](#sfdx-cli-plugin-adppackageinstall)
-* [`sfdx-cli-plugin adp:package:installed:list`](#sfdx-cli-plugin-adppackageinstalledlist)
-* [`sfdx-cli-plugin adp:package:list`](#sfdx-cli-plugin-adppackagelist)
-* [`sfdx-cli-plugin adp:package:retrieve`](#sfdx-cli-plugin-adppackageretrieve)
-* [`sfdx-cli-plugin adp:package:retrieve:postdestruct`](#sfdx-cli-plugin-adppackageretrievepostdestruct)
-* [`sfdx-cli-plugin adp:package:retrieve:predestruct`](#sfdx-cli-plugin-adppackageretrievepredestruct)
-* [`sfdx-cli-plugin adp:package:uninstall`](#sfdx-cli-plugin-adppackageuninstall)
-* [`sfdx-cli-plugin adp:rest:query`](#sfdx-cli-plugin-adprestquery)
-* [`sfdx-cli-plugin adp:rest:upsert`](#sfdx-cli-plugin-adprestupsert)
-* [`sfdx-cli-plugin adp:shell:run`](#sfdx-cli-plugin-adpshellrun)
-* [`sfdx-cli-plugin adp:shell:runjar`](#sfdx-cli-plugin-adpshellrunjar)
-* [`sfdx-cli-plugin adp:source:deploy`](#sfdx-cli-plugin-adpsourcedeploy)
-* [`sfdx-cli-plugin adp:source:destruct`](#sfdx-cli-plugin-adpsourcedestruct)
-* [`sfdx-cli-plugin adp:source:destructive:prepare`](#sfdx-cli-plugin-adpsourcedestructiveprepare)
-* [`sfdx-cli-plugin adp:source:prepare`](#sfdx-cli-plugin-adpsourceprepare)
-* [`sfdx-cli-plugin adp:tooling:query`](#sfdx-cli-plugin-adptoolingquery)
-* [`sfdx-cli-plugin adp:tooling:update`](#sfdx-cli-plugin-adptoolingupdate)
+* [`sfdx adp:apex:execute -d [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adpapexexecute--d--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:auth:soap:login [-u <string>] [-p <string>] [-r <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adpauthsoaplogin--u-string--p-string--r-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:config:show [-g] [-l] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adpconfigshow--g--l---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:data:run [-c <string>] [-p <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adpdatarun--c-string--p-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:package:install [-a] [-b Latest|Released] [--noprompt] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adppackageinstall--a--b-latestreleased---noprompt--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:package:installed:list [-a] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adppackageinstalledlist--a--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:package:list [-a] [-b Latest|Released] [-v] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adppackagelist--a--b-latestreleased--v---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:package:retrieve -p <string> [-q] [-t <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adppackageretrieve--p-string--q--t-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:package:retrieve:postdestruct [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adppackageretrievepostdestruct--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:package:retrieve:predestruct [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adppackageretrievepredestruct--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:package:uninstall [--noprompt] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adppackageuninstall---noprompt--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:rest:query -q <string> -a <string> -e <string> [-m <number>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adprestquery--q-string--a-string--e-string--m-number---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:rest:upsert -o <string> -t <string> -x <string> -a <string> -e <string> [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adprestupsert--o-string--t-string--x-string--a-string--e-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:shell:run [-f <string>] [-a <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adpshellrun--f-string--a-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:shell:runjar -j <string> [--classpath <string>] [-a <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adpshellrunjar--j-string---classpath-string--a-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:source:deploy [-b] [-c] [--noanonymous] [--nodestructives] [--nomain] [-l <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adpsourcedeploy--b--c---noanonymous---nodestructives---nomain--l-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:source:destruct [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adpsourcedestruct--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:source:destructive:prepare -d <string> [-f <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adpsourcedestructiveprepare--d-string--f-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:source:prepare [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adpsourceprepare---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:tooling:query -q <string> -u <string> -p <string> [-m <number>] [-r <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adptoolingquery--q-string--u-string--p-string--m-number--r-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+* [`sfdx adp:tooling:update -o <string> -t <string> -a <string> -e <string> [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-adptoolingupdate--o-string--t-string--a-string--e-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
 
-## `sfdx-cli-plugin adp:apex:execute`
+## `sfdx adp:apex:execute -d [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Iterates through and executes apex files in the specified directory
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:apex:execute
+  $ sfdx adp:apex:execute -d [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --directory=directory                       (required) path to directory containing Apex code files
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
-  --apiversion=apiversion                         override the api version used for api requests made by this command
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -d, --directory                                                                   (required) path to directory
+                                                                                    containing Apex code files
+
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLE
   sfdx adp:apex:execute -d deploy/scripts -u myorg
            // Executes the files in the scripts directory for the target alias, myorg
 ```
 
-_See code: [src/commands/adp/apex/execute.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/apex/execute.ts)_
+_See code: [lib/commands/adp/apex/execute.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/apex/execute.js)_
 
-## `sfdx-cli-plugin adp:auth:soap:login`
+## `sfdx adp:auth:soap:login [-u <string>] [-p <string>] [-r <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Authenticates a user via the SOAP API.
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:auth:soap:login
+  $ sfdx adp:auth:soap:login [-u <string>] [-p <string>] [-r <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -p, --password=password                         Salesforce login password
-  -r, --loginurl=loginurl                         Salesforce login URL
-  -u, --username=username                         Salesforce username
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -p, --password=password                                                           Salesforce login password
+  -r, --loginurl=loginurl                                                           Salesforce login URL
+  -u, --username=username                                                           Salesforce username
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLE
   sfdx adp:auth:soap:login -u myusername -p mypassword
 ```
 
-_See code: [src/commands/adp/auth/soap/login.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/auth/soap/login.ts)_
+_See code: [lib/commands/adp/auth/soap/login.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/auth/soap/login.js)_
 
-## `sfdx-cli-plugin adp:config:show`
+## `sfdx adp:config:show [-g] [-l] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Displays global and local configuration settings
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:config:show
+  $ sfdx adp:config:show [-g] [-l] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -g, --globalonly                                show global config only
-  -l, --localonly                                 show local config only
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -g, --globalonly                                                                  show global config only
+  -l, --localonly                                                                   show local config only
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   sfdx adp:config:show
@@ -142,23 +157,31 @@ EXAMPLES
   sfdx adp:config:show -l
 ```
 
-_See code: [src/commands/adp/config/show.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/config/show.ts)_
+_See code: [lib/commands/adp/config/show.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/config/show.js)_
 
-## `sfdx-cli-plugin adp:data:run`
+## `sfdx adp:data:run [-c <string>] [-p <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Runs a job to retrieve from or push data to an org.
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:data:run
+  $ sfdx adp:data:run [-c <string>] [-p <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -c, --classname=classname                       Java class name of job to run
-  -p, --sandboxpassword=sandboxpassword           Password for target org if sandbox
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
-  --apiversion=apiversion                         override the api version used for api requests made by this command
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -c, --classname=classname                                                         Java class name of job to run
+  -p, --sandboxpassword=sandboxpassword                                             Password for target org if sandbox
+
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 DESCRIPTION
   Available Job Types: get, put, delete
@@ -171,31 +194,35 @@ EXAMPLES
            // Runs job without user interaction
 ```
 
-_See code: [src/commands/adp/data/run.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/data/run.ts)_
+_See code: [lib/commands/adp/data/run.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/data/run.js)_
 
-## `sfdx-cli-plugin adp:package:install`
+## `sfdx adp:package:install [-a] [-b Latest|Released] [--noprompt] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Installs the current package and/or its dependencies
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:package:install
+  $ sfdx adp:package:install [-a] [-b Latest|Released] [--noprompt] [-u <string>] [--apiversion <string>] [--json] 
+  [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -a, --allpackages                               All packages, not just dependencies
+  -a, --allpackages                                                                 All packages, not just dependencies
 
-  -b, --versionbias=(Latest|Released)             Type of bias to use when determining package versions
-                                                  (Latest|Released)
+  -b, --versionbias=(Latest|Released)                                               Type of bias to use when determining
+                                                                                    package versions (Latest|Released)
 
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
 
-  --apiversion=apiversion                         override the api version used for api requests made by this command
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
 
-  --json                                          format output as json
+  --json                                                                            format output as json
 
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
-  --noprompt                                      disables all prompts
+  --noprompt                                                                        disables all prompts
 
 EXAMPLES
   sfdx adp:package:install
@@ -203,49 +230,60 @@ EXAMPLES
   sfdx adp:package:install -u xfrom1 -l
 ```
 
-_See code: [src/commands/adp/package/install.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/package/install.ts)_
+_See code: [lib/commands/adp/package/install.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/install.js)_
 
-## `sfdx-cli-plugin adp:package:installed:list`
+## `sfdx adp:package:installed:list [-a] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Compares install package versions with version specified in sfdx-project.json
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:package:installed:list
+  $ sfdx adp:package:installed:list [-a] [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -a, --allpackages                               All packages, not just dependencies
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
-  --apiversion=apiversion                         override the api version used for api requests made by this command
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -a, --allpackages                                                                 All packages, not just dependencies
+
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLE
   sfdx adp:package:installed:list -u xfrom1
            // Lists the dependencies and the install status of each for the specified target username
 ```
 
-_See code: [src/commands/adp/package/installed/list.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/package/installed/list.ts)_
+_See code: [lib/commands/adp/package/installed/list.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/installed/list.js)_
 
-## `sfdx-cli-plugin adp:package:list`
+## `sfdx adp:package:list [-a] [-b Latest|Released] [-v] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Lists the current package and all its dependencies
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:package:list
+  $ sfdx adp:package:list [-a] [-b Latest|Released] [-v] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -a, --allpackages                               all packages, not just dependencies
+  -a, --allpackages                                                                 all packages, not just dependencies
 
-  -b, --versionbias=(Latest|Released)             type of bias to use when determining package versions
-                                                  (Latest|Released)
+  -b, --versionbias=(Latest|Released)                                               type of bias to use when determining
+                                                                                    package versions (Latest|Released)
 
-  -v, --verbose                                   display extended package version details
+  -v, --isverbose                                                                   display extended package version
+                                                                                    details
 
-  --json                                          format output as json
+  --json                                                                            format output as json
 
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   sfdx adp:package:list
@@ -259,30 +297,37 @@ EXAMPLES
            // Lists the packages belonging to the specified branch
 ```
 
-_See code: [src/commands/adp/package/list.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/package/list.ts)_
+_See code: [lib/commands/adp/package/list.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/list.js)_
 
-## `sfdx-cli-plugin adp:package:retrieve`
+## `sfdx adp:package:retrieve -p <string> [-q] [-t <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Retrieves a developer package, converts, and merges it into the local source
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:package:retrieve
+  $ sfdx adp:package:retrieve -p <string> [-q] [-t <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -p, --package=package                           (required) Package or change set to retrieve
-  -q, --quietmode                                 bypasses all user interaction
+  -p, --package=package                                                             (required) Package or change set to
+                                                                                    retrieve
 
-  -t, --target=target                             [default: force-app] Destination directory for conversion output.
-                                                  Defaults to force-app.
+  -q, --quietmode                                                                   bypasses all user interaction
 
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
+  -t, --target=target                                                               [default: force-app] Destination
+                                                                                    directory for conversion output.
+                                                                                    Defaults to force-app.
 
-  --apiversion=apiversion                         override the api version used for api requests made by this command
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
 
-  --json                                          format output as json
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
 
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   sfdx adp:package:retrieve -p MyPackage -u OrgUserName
@@ -295,21 +340,28 @@ EXAMPLES
          // performs the retrieve-unzip-convert in Quiet mode, i.e without feedback
 ```
 
-_See code: [src/commands/adp/package/retrieve.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/package/retrieve.ts)_
+_See code: [lib/commands/adp/package/retrieve.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/retrieve.js)_
 
-## `sfdx-cli-plugin adp:package:retrieve:postdestruct`
+## `sfdx adp:package:retrieve:postdestruct [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Installs the current package and/or its dependencies
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:package:retrieve:postdestruct
+  $ sfdx adp:package:retrieve:postdestruct [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
-  --apiversion=apiversion                         override the api version used for api requests made by this command
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   sfdx adp:package:retrieve:postdestruct
@@ -319,21 +371,28 @@ EXAMPLES
            // Retrieves the "postdestruct" package from the org having username/alias "myalias"
 ```
 
-_See code: [src/commands/adp/package/retrieve/postdestruct.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/package/retrieve/postdestruct.ts)_
+_See code: [lib/commands/adp/package/retrieve/postdestruct.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/retrieve/postdestruct.js)_
 
-## `sfdx-cli-plugin adp:package:retrieve:predestruct`
+## `sfdx adp:package:retrieve:predestruct [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Installs the current package and/or its dependencies
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:package:retrieve:predestruct
+  $ sfdx adp:package:retrieve:predestruct [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
-  --apiversion=apiversion                         override the api version used for api requests made by this command
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   sfdx adp:package:retrieve:predestruct
@@ -343,22 +402,30 @@ EXAMPLES
            // Retrieves the "predestruct" package from the org having username/alias "myalias"
 ```
 
-_See code: [src/commands/adp/package/retrieve/predestruct.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/package/retrieve/predestruct.ts)_
+_See code: [lib/commands/adp/package/retrieve/predestruct.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/retrieve/predestruct.js)_
 
-## `sfdx-cli-plugin adp:package:uninstall`
+## `sfdx adp:package:uninstall [--noprompt] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Uninstalls the current package and/or its dependencies
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:package:uninstall
+  $ sfdx adp:package:uninstall [--noprompt] [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
-  --apiversion=apiversion                         override the api version used for api requests made by this command
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
-  --noprompt                                      disables all prompts
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
+
+  --noprompt                                                                        disables all prompts
 
 EXAMPLES
   sfdx adp:package:uninstall
@@ -366,68 +433,91 @@ EXAMPLES
   sfdx adp:package:uninstall --noprompt
 ```
 
-_See code: [src/commands/adp/package/uninstall.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/package/uninstall.ts)_
+_See code: [lib/commands/adp/package/uninstall.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/uninstall.js)_
 
-## `sfdx-cli-plugin adp:rest:query`
+## `sfdx adp:rest:query -q <string> -a <string> -e <string> [-m <number>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Executes a SOQL query via the Tooling API
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:rest:query
+  $ sfdx adp:rest:query -q <string> -a <string> -e <string> [-m <number>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -a, --accesstoken=accesstoken                   (required) OAuth access token with bang (!) escaped
-  -e, --endpoint=endpoint                         (required) Salesforce SOAP API endpoint
-  -m, --maxfetch=maxfetch                         Max records to fetch
-  -q, --query=query                               (required) SOQL query string
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -a, --accesstoken=accesstoken                                                     (required) OAuth access token with
+                                                                                    bang (!) escaped
+
+  -e, --endpoint=endpoint                                                           (required) Salesforce SOAP API
+                                                                                    endpoint
+
+  -m, --maxfetch=maxfetch                                                           Max records to fetch
+
+  -q, --query=query                                                                 (required) SOQL query string
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   sfdx adp:rest:query -e https://myinstance.com -a myaccesstoken -q "SELECT Id, Name FROM Account limit 5"
   sfdx adp:rest:query -e https://myinstance.com -a myaccesstoken -q "SELECT Id, Name FROM Account limit 5" -m 100
 ```
 
-_See code: [src/commands/adp/rest/query.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/rest/query.ts)_
+_See code: [lib/commands/adp/rest/query.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/rest/query.js)_
 
-## `sfdx-cli-plugin adp:rest:upsert`
+## `sfdx adp:rest:upsert -o <string> -t <string> -x <string> -a <string> -e <string> [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Executes an Upsert via the REST API
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:rest:upsert
+  $ sfdx adp:rest:upsert -o <string> -t <string> -x <string> -a <string> -e <string> [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -a, --accesstoken=accesstoken                   (required) OAuth access token with bang (!) escaped
-  -e, --endpoint=endpoint                         (required) Salesforce SOAP API endpoint
-  -o, --objectjson=objectjson                     (required) JSON array of objects to upsert
-  -t, --objecttype=objecttype                     (required) Type of object to upsert
-  -x, --externalidfield=externalidfield           (required) Name of external id field
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -a, --accesstoken=accesstoken                                                     (required) OAuth access token with
+                                                                                    bang (!) escaped
+
+  -e, --endpoint=endpoint                                                           (required) Salesforce SOAP API
+                                                                                    endpoint
+
+  -o, --objectjson=objectjson                                                       (required) JSON array of objects to
+                                                                                    upsert
+
+  -t, --objecttype=objecttype                                                       (required) Type of object to upsert
+
+  -x, --externalidfield=externalidfield                                             (required) Name of external id field
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLE
   sfdx adp:rest:upsert -t User -o '[{"Ext_Id": "0GQ46000000LA9NGAW", "FirstName": "Xavier"}]' -e https://myinstance.com 
   -a myaccesstoken
 ```
 
-_See code: [src/commands/adp/rest/upsert.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/rest/upsert.ts)_
+_See code: [lib/commands/adp/rest/upsert.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/rest/upsert.js)_
 
-## `sfdx-cli-plugin adp:shell:run`
+## `sfdx adp:shell:run [-f <string>] [-a <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Runs shell script
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:shell:run
+  $ sfdx adp:shell:run [-f <string>] [-a <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -a, --args=args                                 argument list
-  -f, --file=file                                 shell script file to run
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -a, --args=args                                                                   argument list
+  -f, --file=file                                                                   shell script file to run
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   sfdx adp:shell:run
@@ -443,26 +533,29 @@ EXAMPLES
            // Runs script with parameters
 ```
 
-_See code: [src/commands/adp/shell/run.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/shell/run.ts)_
+_See code: [lib/commands/adp/shell/run.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/shell/run.js)_
 
-## `sfdx-cli-plugin adp:shell:runjar`
+## `sfdx adp:shell:runjar -j <string> [--classpath <string>] [-a <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Executes a JAR file with the specified pipe-delimited parameters.
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:shell:runjar
+  $ sfdx adp:shell:runjar -j <string> [--classpath <string>] [-a <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -a, --arguments=arguments                       pipe-delimited jar file arguments
-  -j, --jarfile=jarfile                           (required) path to jar file
+  -a, --arguments=arguments                                                         pipe-delimited jar file arguments
+  -j, --jarfile=jarfile                                                             (required) path to jar file
 
-  --classpath=classpath                           a colon(:)-delimited list of directories, JAR archives or ZIP archives
-                                                  to search for class files
+  --classpath=classpath                                                             a colon(:)-delimited list of
+                                                                                    directories, JAR archives or ZIP
+                                                                                    archives to search for class files
 
-  --json                                          format output as json
+  --json                                                                            format output as json
 
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   sfdx adp:shell:runjar -j MyJarFile.jar
@@ -478,37 +571,47 @@ EXAMPLES
            // Passing 2 arguments when one or more contains spaces
 ```
 
-_See code: [src/commands/adp/shell/runjar.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/shell/runjar.ts)_
+_See code: [lib/commands/adp/shell/runjar.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/shell/runjar.js)_
 
-## `sfdx-cli-plugin adp:source:deploy`
+## `sfdx adp:source:deploy [-b] [-c] [--noanonymous] [--nodestructives] [--nomain] [-l <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Deploys the source to a non-tracked org
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:source:deploy
+  $ sfdx adp:source:deploy [-b] [-c] [--noanonymous] [--nodestructives] [--nomain] [-l <string>] [-u <string>] 
+  [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -b, --debugmode                                 performs mdapi conversion but skips deployment
-  -c, --checkonly                                 validate deploy but don’t save to the org
+  -b, --debugmode                                                                   performs mdapi conversion but skips
+                                                                                    deployment
 
-  -l, --testlevel=testlevel                       [default: RunAllTestsInOrg]
-                                                  NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg
+  -c, --checkonly                                                                   validate deploy but don’t save to
+                                                                                    the org
 
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
+  -l, --testlevel=testlevel                                                         [default: RunAllTestsInOrg]
+                                                                                    NoTestRun|RunSpecifiedTests|RunLocal
+                                                                                    Tests|RunAllTestsInOrg
 
-  --apiversion=apiversion                         override the api version used for api requests made by this command
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
 
-  --json                                          format output as json
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
 
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  --json                                                                            format output as json
 
-  --noanonymous                                   exclude pre and post anonymous Apex execution commands (excluded from
-                                                  override)
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
-  --nodestructives                                exclude pre and post destructive commands (excluded from override)
+  --noanonymous                                                                     exclude pre and post anonymous Apex
+                                                                                    execution commands (excluded from
+                                                                                    override)
 
-  --nomain                                        exclude main payload deployment
+  --nodestructives                                                                  exclude pre and post destructive
+                                                                                    commands (excluded from override)
+
+  --nomain                                                                          exclude main payload deployment
 
 EXAMPLES
   sfdx adp:source:deploy
@@ -527,42 +630,55 @@ EXAMPLES
            // Excludes pre and post destructive metadata (not passed to override)
 ```
 
-_See code: [src/commands/adp/source/deploy.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/source/deploy.ts)_
+_See code: [lib/commands/adp/source/deploy.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/source/deploy.js)_
 
-## `sfdx-cli-plugin adp:source:destruct`
+## `sfdx adp:source:destruct [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Generates a destructiveChanges.xml manifest
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:source:destruct
+  $ sfdx adp:source:destruct [-u <string>] [--apiversion <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -u, --targetusername=targetusername             username or alias for the target org; overrides default target org
-  --apiversion=apiversion                         override the api version used for api requests made by this command
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -u, --targetusername=targetusername                                               username or alias for the target
+                                                                                    org; overrides default target org
+
+  --apiversion=apiversion                                                           override the api version used for
+                                                                                    api requests made by this command
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLE
   sfdx adp:source:destruct -u myscratch
            // Generates a destructiveChanges.xml file for metadata deletions on the tracked org
 ```
 
-_See code: [src/commands/adp/source/destruct.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/source/destruct.ts)_
+_See code: [lib/commands/adp/source/destruct.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/source/destruct.js)_
 
-## `sfdx-cli-plugin adp:source:destructive:prepare`
+## `sfdx adp:source:destructive:prepare -d <string> [-f <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Replaces (*) elements in the destructive package.xml with destructive elements specified by name
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:source:destructive:prepare
+  $ sfdx adp:source:destructive:prepare -d <string> [-f <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -d, --destructsrcdir=destructsrcdir             (required) MDAPI-formatted source to destruct
-  -f, --destructivexml=destructivexml             Destructive XML file to prepare
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -d, --destructsrcdir=destructsrcdir                                               (required) MDAPI-formatted source to
+                                                                                    destruct
+
+  -f, --destructivexml=destructivexml                                               Destructive XML file to prepare
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLE
   sfdx adp:source:destructive:prepare -f $POST_DESTRUCT_XML -d $CONVERTED_POST_DESTRUCT_DIR
@@ -570,73 +686,91 @@ EXAMPLE
   -d.
 ```
 
-_See code: [src/commands/adp/source/destructive/prepare.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/source/destructive/prepare.ts)_
+_See code: [lib/commands/adp/source/destructive/prepare.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/source/destructive/prepare.js)_
 
-## `sfdx-cli-plugin adp:source:prepare`
+## `sfdx adp:source:prepare [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Prepares the source for deployment using the pre-deployment transforms configured in plugin-config.json
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:source:prepare
+  $ sfdx adp:source:prepare [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLE
   sfdx adp:source:prepare
            // Transforms the source under force-app as configured in the project plugin-config.json
 ```
 
-_See code: [src/commands/adp/source/prepare.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/source/prepare.ts)_
+_See code: [lib/commands/adp/source/prepare.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/source/prepare.js)_
 
-## `sfdx-cli-plugin adp:tooling:query`
+## `sfdx adp:tooling:query -q <string> -u <string> -p <string> [-m <number>] [-r <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Executes a SOQL query via the Tooling API
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:tooling:query
+  $ sfdx adp:tooling:query -q <string> -u <string> -p <string> [-m <number>] [-r <string>] [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -m, --maxfetch=maxfetch                         Max records to fetch
-  -p, --password=password                         (required) Salesforce password
-  -q, --query=query                               (required) SOQL query string
-  -r, --loginurl=loginurl                         Use https://test.salesforce.com for sandbox
-  -u, --username=username                         (required) Salesforce username
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -m, --maxfetch=maxfetch                                                           Max records to fetch
+  -p, --password=password                                                           (required) Salesforce password
+  -q, --query=query                                                                 (required) SOQL query string
+
+  -r, --loginurl=loginurl                                                           Use https://test.salesforce.com for
+                                                                                    sandbox
+
+  -u, --username=username                                                           (required) Salesforce username
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLES
   sfdx adp:tooling:query -u USERNAME -p PASSWORD -q "SELECT id FROM SandboxInfo"
   sfdx adp:tooling:query -r https://test.salesforce.com -u USERNAME -p PASSWORD -q "SELECT id FROM SandboxInfo" -m 100
 ```
 
-_See code: [src/commands/adp/tooling/query.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/tooling/query.ts)_
+_See code: [lib/commands/adp/tooling/query.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/tooling/query.js)_
 
-## `sfdx-cli-plugin adp:tooling:update`
+## `sfdx adp:tooling:update -o <string> -t <string> -a <string> -e <string> [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
 Executes an update via the Tooling API
 
 ```
 USAGE
-  $ sfdx-cli-plugin adp:tooling:update
+  $ sfdx adp:tooling:update -o <string> -t <string> -a <string> -e <string> [--json] [--loglevel 
+  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
 
 OPTIONS
-  -a, --accesstoken=accesstoken                   (required) OAuth access token with bang (!) escaped
-  -e, --endpoint=endpoint                         (required) Salesforce SOAP API endpoint
-  -o, --objectjson=objectjson                     (required) Object to update
-  -t, --objecttype=objecttype                     (required) Type of object to update
-  --json                                          format output as json
-  --loglevel=(trace|debug|info|warn|error|fatal)  logging level for this command invocation
+  -a, --accesstoken=accesstoken                                                     (required) OAuth access token with
+                                                                                    bang (!) escaped
+
+  -e, --endpoint=endpoint                                                           (required) Salesforce SOAP API
+                                                                                    endpoint
+
+  -o, --objectjson=objectjson                                                       (required) Object to update
+
+  -t, --objecttype=objecttype                                                       (required) Type of object to update
+
+  --json                                                                            format output as json
+
+  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
+                                                                                    this command invocation
 
 EXAMPLE
   sfdx adp:tooling:update -t SandboxInfo -o '{"Id": "0GQ46000000LA9NGAW", "LicenseType": "DEVELOPER", "AutoActivate": 
   true}' -e https://myinstance.com -a myaccesstoken
 ```
 
-_See code: [src/commands/adp/tooling/update.ts](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/src/commands/adp/tooling/update.ts)_
+_See code: [lib/commands/adp/tooling/update.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/tooling/update.js)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin

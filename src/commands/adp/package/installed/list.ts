@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import chalk from 'chalk';
 import pkg = require('../../../../helpers/packageHelper');
 import * as org from '../../../../shared/orgUtil';
@@ -26,7 +26,7 @@ export default class List extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        allpackages: { char: 'a', type: 'boolean', default: false, description: 'All packages, not just dependencies'}
+        allpackages: flags.boolean({ char: 'a', default: false, description: 'All packages, not just dependencies'})
     };
 
     protected static requiresUsername = true;

@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxProjectJson } from '@salesforce/core';
+import { SfdxProject } from '@salesforce/core';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
 import { isNullOrUndefined } from 'util';
@@ -112,8 +112,8 @@ export enum InstallStatus {
  * Wrapper function to retrieve project JSON file as JSON object
  */
 export async function getProjectJson() {
-    const project = await SfdxProjectJson.retrieve<SfdxProjectJson>();
-    const projectJson = project.toObject();
+    const project = await SfdxProject.resolve();
+    const projectJson = await project.resolveProjectConfig();
     return projectJson;
 }
 

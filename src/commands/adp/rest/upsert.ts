@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import * as authUtil from '../../../shared/authUtil';
 
 export default class Upsert extends SfdxCommand {
@@ -23,11 +23,11 @@ export default class Upsert extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        objectjson: {type: 'string', char: 'o', required: true, description: 'JSON array of objects to upsert'},
-        objecttype: {type: 'string', char: 't', required: true, description: 'Type of object to upsert'},
-        externalidfield: {type: 'string', char: 'x', required: true, description: 'Name of external id field'},
-        accesstoken: {type: 'string', char: 'a', required: true, description: 'OAuth access token with bang (!) escaped'},
-        endpoint: {type: 'string', char: 'e', required: true, description: 'Salesforce SOAP API endpoint'}
+        objectjson: flags.string({char: 'o', required: true, description: 'JSON array of objects to upsert'}),
+        objecttype: flags.string({char: 't', required: true, description: 'Type of object to upsert'}),
+        externalidfield: flags.string({char: 'x', required: true, description: 'Name of external id field'}),
+        accesstoken: flags.string({char: 'a', required: true, description: 'OAuth access token with bang (!) escaped'}),
+        endpoint: flags.string({char: 'e', required: true, description: 'Salesforce SOAP API endpoint'})
     };
 
     protected static requiresUsername = false;
@@ -55,7 +55,7 @@ export default class Upsert extends SfdxCommand {
             if (err || !ret.success) {
                 result = err;
             }
-            result = ret.id;
+            result = ret.success;
         });
 
         return result;

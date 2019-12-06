@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import * as authUtil from '../../../shared/authUtil';
 
 export default class Query extends SfdxCommand {
@@ -23,10 +23,10 @@ export default class Query extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        query: {type: 'string', char: 'q', required: true, description: 'SOQL query string'},
-        maxfetch: {type: 'number', char: 'm', required: false, description: 'Max records to fetch'},
-        accesstoken: {type: 'string', char: 'a', required: true, description: 'OAuth access token with bang (!) escaped'},
-        endpoint: {type: 'string', char: 'e', required: true, description: 'Salesforce SOAP API endpoint'}
+        query: flags.string({char: 'q', required: true, description: 'SOQL query string'}),
+        maxfetch: flags.number({char: 'm', required: false, description: 'Max records to fetch'}),
+        accesstoken: flags.string({char: 'a', required: true, description: 'OAuth access token with bang (!) escaped'}),
+        endpoint: flags.string({char: 'e', required: true, description: 'Salesforce SOAP API endpoint'})
     };
 
     protected static requiresUsername = false;

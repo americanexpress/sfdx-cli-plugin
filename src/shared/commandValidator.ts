@@ -23,14 +23,14 @@ class ConfigReaderImpl extends ConfigAggregator implements ConfigReader {
         super();
     }
 
-    public async getDefaultDevHubUsername(): Promise<string|boolean> {
+    public async getDefaultDevHubUsername() {
         const config  = await ConfigAggregator.create();
         return config.getPropertyValue('defaultdevhubusername');
     }
 }
 
 export interface ConfigReader {
-    getDefaultDevHubUsername(): Promise<string|boolean>;
+    getDefaultDevHubUsername();
 }
 
 export async function validate(): Promise<string[]> {

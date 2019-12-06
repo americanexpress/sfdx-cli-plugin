@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import * as fs from 'fs-extra';
 import glob = require('glob');
 import * as path from 'path';
@@ -31,8 +31,8 @@ export default class Prepare extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        destructivexml: { char: 'f', type: 'string', description: 'Destructive XML file to prepare'},
-        destructsrcdir: { char: 'd', type: 'string', required: true, description: 'MDAPI-formatted source to destruct'}
+        destructivexml: flags.string({ char: 'f', description: 'Destructive XML file to prepare'}),
+        destructsrcdir: flags.string({ char: 'd', required: true, description: 'MDAPI-formatted source to destruct'})
     };
 
     protected static requiresUsername = false;

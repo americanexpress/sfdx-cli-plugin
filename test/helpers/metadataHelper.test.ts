@@ -12,7 +12,7 @@
  * the License.
  */
 
-import { expect } from '@salesforce/command/dist/test';
+import { expect } from '@salesforce/command/lib/test';
 import * as helper from '../../src/helpers/metadataHelper';
 
 describe('---------- metadataHelper UNIT ----------', () => {

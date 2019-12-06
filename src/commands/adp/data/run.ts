@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
 import * as inquirer from 'inquirer';
@@ -38,8 +38,8 @@ Available Job Types: get, put, delete
     ];
 
     protected static flagsConfig = {
-        classname: { char: 'c', type: 'string', description: 'Java class name of job to run'},
-        sandboxpassword: { char: 'p', type: 'string', description: 'Password for target org if sandbox' }
+        classname: flags.string({ char: 'c', description: 'Java class name of job to run'}),
+        sandboxpassword: flags.string({ char: 'p', description: 'Password for target org if sandbox' })
     };
 
     protected static requiresUsername = true;
@@ -56,7 +56,7 @@ Available Job Types: get, put, delete
             sfUsername: null,
             sfPassword: null,
             argValidator: null
-        };
+        }
 
         // Load config file plugin-config.json and validate
         logger.start('Reading configuration information');

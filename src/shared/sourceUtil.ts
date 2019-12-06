@@ -32,7 +32,9 @@ export interface MetadataType {
  */
 export async function getDeletedComponents(username: string): Promise<SourceMember[]> {
 
-    const conn = await Connection.create(await AuthInfo.create(username));
+    const conn = await Connection.create({
+        authInfo: await AuthInfo.create({username})
+    });
 
     const q = 'SELECT IsNameObsolete, MemberIdOrName, MemberName, MemberType, RevisionNum'
                  + ' FROM SourceMember WHERE IsNameObsolete = true'

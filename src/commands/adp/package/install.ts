@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import chalk from 'chalk';
 import childproc = require('child_process');
 import * as inquirer from 'inquirer';
@@ -30,12 +30,12 @@ export default class Install extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        allpackages: { char: 'a', type: 'boolean', default: false, description: 'All packages, not just dependencies'},
-        versionbias: {
-            char: 'b', type: 'enum', description: 'Type of bias to use when determining package versions (Latest|Released)',
+        allpackages: flags.boolean({ char: 'a', default: false, description: 'All packages, not just dependencies'}),
+        versionbias: flags.enum({
+            char: 'b', description: 'Type of bias to use when determining package versions (Latest|Released)',
             options: ['Latest', 'Released']
-        },
-        noprompt: {type: 'boolean', description: 'disables all prompts'}
+        }),
+        noprompt: flags.boolean({description: 'disables all prompts'})
     };
 
     protected static requiresUsername = true;

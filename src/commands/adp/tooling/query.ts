@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import * as authUtil from '../../../shared/authUtil';
 
 export default class Query extends SfdxCommand {
@@ -23,11 +23,11 @@ export default class Query extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        query: {type: 'string', char: 'q', required: true, description: 'SOQL query string'},
-        maxfetch: {type: 'number', char: 'm', required: false, description: 'Max records to fetch'},
-        username: {char: 'u', type: 'string', required: true, description: 'Salesforce username'},
-        password: {char: 'p', type: 'password', required: true, description: 'Salesforce password'},
-        loginurl: {type: 'string', char: 'r', required: false, description: 'Use https://test.salesforce.com for sandbox'}
+        query: flags.string({char: 'q', required: true, description: 'SOQL query string'}),
+        maxfetch: flags.number({char: 'm', required: false, description: 'Max records to fetch'}),
+        username: flags.string({char: 'u', required: true, description: 'Salesforce username'}),
+        password: flags.string({char: 'p', required: true, description: 'Salesforce password'}),
+        loginurl: flags.string({char: 'r', required: false, description: 'Use https://test.salesforce.com for sandbox'})
     };
 
     protected static requiresUsername = false;

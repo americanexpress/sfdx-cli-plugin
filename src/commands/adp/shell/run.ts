@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import { SfdxProject } from '@salesforce/core';
 import * as util from 'util';
 import * as g from '../../../globals';
@@ -36,8 +36,8 @@ export default class Run extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        file: {char: 'f', type: 'string', description: 'shell script file to run', required: false},
-        args: {char: 'a', type: 'string', description: 'argument list', required: false}
+        file: flags.string({char: 'f', description: 'shell script file to run', required: false}),
+        args: flags.string({char: 'a', description: 'argument list', required: false})
     };
 
     protected static requiresUsername = false;

@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import chalk from 'chalk';
 import childproc = require('child_process');
 import * as inquirer from 'inquirer';
@@ -28,7 +28,7 @@ export default class Uninstall extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        noprompt: {type: 'boolean', description: 'disables all prompts'}
+        noprompt: flags.boolean({description: 'disables all prompts'})
     };
 
     protected static requiresUsername = true;

@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { expect } from '@salesforce/command/dist/test';
+import { expect } from '@salesforce/command/lib/test';
 import * as cli from '../../src/shared/cliCommand';
 import * as fileUtil from '../../src/shared/fileUtil';
 

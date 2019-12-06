@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
 import * as fs from 'fs';
@@ -41,9 +41,9 @@ export default class Get extends SfdxCommand {
     // Note: Below descriptions should pull from JSON file under messages. XF
 
     protected static flagsConfig = {
-        package: { type: 'string', required: true, char: 'p', description: 'Package or change set to retrieve' },
-        quietmode: { char: 'q', description: 'bypasses all user interaction', required: false, type: 'boolean' },
-        target: { type: 'string', char: 't', default: 'force-app', description: 'Destination directory for conversion output. Defaults to force-app.' }
+        package: flags.string({ required: true, char: 'p', description: 'Package or change set to retrieve' }),
+        quietmode: flags.boolean({ char: 'q', description: 'bypasses all user interaction', required: false }),
+        target: flags.string({ char: 't', default: 'force-app', description: 'Destination directory for conversion output. Defaults to force-app.' })
     };
 
     // tslint:disable-next-line:no-any
@@ -56,16 +56,16 @@ export default class Get extends SfdxCommand {
         if (!quietMode) this.ux.startSpinner(chalk.gray('Retrieving developer package, ') + chalk.magenta(this.flags.package));
 
         try {
-          execSync(retrieveCommand, { maxBuffer: 1000000 * 1024, encoding: 'utf8' });
+            execSync(retrieveCommand, { maxBuffer: 1000000 * 1024, encoding: 'utf8' });
         } catch (err) {
-          console.log(err.message);
+            console.log(err.message);
         }
 
         if (!quietMode) this.ux.stopSpinner(chalk.gray('done.'));
 
         // Unzip the package
         if (!quietMode) this.ux.startSpinner(chalk.gray('Unzipping the package'));
-        execSync(`unzip -qqo ./${tempDir}/unpackaged.zip -d ./${tempDir}`, {encoding: 'utf8'});
+        execSync(`unzip -qqo ./${tempDir}/unpackaged.zip -d ./${tempDir}`, { encoding: 'utf8' });
 
         // Delete the zip file
         fs.unlinkSync(`${tempDir}/unpackaged.zip`);
@@ -76,7 +76,7 @@ export default class Get extends SfdxCommand {
 
         const targetDir = this.flags.target;
         const commandStr = `sfdx force:mdapi:convert -r ./${tempDir} -d "${targetDir}"`;
-        const convertResult = execSync(commandStr, {encoding: 'utf8'});
+        const convertResult = execSync(commandStr, { encoding: 'utf8' });
 
         if (!quietMode) this.ux.stopSpinner(chalk.gray('done.'));
 

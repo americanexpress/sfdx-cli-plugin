@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import chalk from 'chalk';
 import pkg = require('../../../helpers/packageHelper');
 
@@ -30,10 +30,10 @@ export default class List extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        allpackages: { char: 'a', type: 'boolean', default: false, description: 'all packages, not just dependencies'},
-        versionbias: { char: 'b', type: 'enum', description: 'type of bias to use when determining package versions (Latest|Released)',
-                options: ['Latest', 'Released']},
-        verbose: { char: 'v', type: 'boolean', default: false, description: 'display extended package version details' }
+        allpackages: flags.boolean({ char: 'a', default: false, description: 'all packages, not just dependencies'}),
+        versionbias: flags.enum({ char: 'b', description: 'type of bias to use when determining package versions (Latest|Released)',
+                options: ['Latest', 'Released']}),
+        isverbose: flags.boolean({ char: 'v', default: false, description: 'display extended package version details' })
     };
 
     protected static requiresUsername = false;
@@ -49,7 +49,7 @@ export default class List extends SfdxCommand {
             projectJson: projectJsonObj,
             includeParent,
             versionBias: this.flags.versionbias,
-            verbose: this.flags.verbose
+            verbose: this.flags.isverbose
         });
         this.ux.stopSpinner('done.');
 
@@ -61,7 +61,7 @@ export default class List extends SfdxCommand {
 
         let table: pkg.TableData;
 
-        if (this.flags.verbose) {
+        if (this.flags.isverbose) {
             table = pkg.buildVerboseTable(dependencies);
         } else {
             table = pkg.buildBasicTable(dependencies);

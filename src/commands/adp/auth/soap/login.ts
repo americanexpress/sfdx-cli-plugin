@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import * as auth from '../../../../shared/authUtil';
 
 export default class Login extends SfdxCommand {
@@ -22,9 +22,9 @@ export default class Login extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        username: {char: 'u', type: 'string', description: 'Salesforce username'},
-        password: {char: 'p', type: 'password', description: 'Salesforce login password'},
-        loginurl: {char: 'r', type: 'string', description: 'Salesforce login URL'}
+        username: flags.string({char: 'u', description: 'Salesforce username'}),
+        password: flags.string({char: 'p', description: 'Salesforce login password'}),
+        loginurl: flags.string({char: 'r', description: 'Salesforce login URL'})
     };
 
     protected static requiresUsername = false;

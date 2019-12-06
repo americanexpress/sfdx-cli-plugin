@@ -1,5 +1,9 @@
 Change Log
 ==========
+0.0.6
+-----
+  * Updated salesforce, oclif and other dependencies
+
 0.0.5
 -----
   * Added dependency existence check to adp:package:install

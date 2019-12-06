@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import chalk from 'chalk';
 import { execSync } from 'child_process';
 import { formatPipeDelimitedArguments } from '../../../helpers/runjarHelper';
@@ -36,11 +36,11 @@ export default class RunJar extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        jarfile: {char: 'j', type: 'string', description: 'path to jar file', required: true},
-        classpath: {type: 'string',
+        jarfile: flags.string({char: 'j', description: 'path to jar file', required: true}),
+        classpath: flags.string({
             description: 'a colon(:)-delimited list of directories, JAR archives or ZIP archives to search for class files',
-            required: false},
-        arguments: {char: 'a', type: 'string', description: 'pipe-delimited jar file arguments', required: false}
+            required: false}),
+        arguments: flags.string({char: 'a', description: 'pipe-delimited jar file arguments', required: false})
     };
 
     protected static requiresUsername = false;

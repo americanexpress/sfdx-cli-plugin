@@ -11,7 +11,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-import { SfdxCommand } from '@salesforce/command';
+import { flags, SfdxCommand } from '@salesforce/command';
 import * as path from 'path';
 import * as apexUtil from '../../../shared/apexUtil';
 import * as cli from '../../../shared/cliCommand';
@@ -27,8 +27,8 @@ export default class Execute extends SfdxCommand {
     ];
 
     protected static flagsConfig = {
-        directory: {char: 'd', type: 'string', required: true, default: false,
-                            description: 'path to directory containing Apex code files'}
+        directory: flags.boolean({char: 'd', required: true, default: false,
+                            description: 'path to directory containing Apex code files'})
     };
 
     protected static requiresUsername = true;
