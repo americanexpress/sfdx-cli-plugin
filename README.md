@@ -49,7 +49,7 @@ $ npm install -g sfdx-cli-plugin
 $ sfdx COMMAND
 running command...
 $ sfdx (-v|--version|version)
-sfdx-cli-plugin/0.0.5 darwin-x64 node-v11.13.0
+sfdx-cli-plugin/0.0.6 darwin-x64 node-v11.13.0
 $ sfdx --help [COMMAND]
 USAGE
   $ sfdx COMMAND
@@ -108,7 +108,7 @@ EXAMPLE
            // Executes the files in the scripts directory for the target alias, myorg
 ```
 
-_See code: [lib/commands/adp/apex/execute.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/apex/execute.js)_
+_See code: [lib/commands/adp/apex/execute.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/apex/execute.js)_
 
 ## `sfdx adp:auth:soap:login [-u <string>] [-p <string>] [-r <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -132,7 +132,7 @@ EXAMPLE
   sfdx adp:auth:soap:login -u myusername -p mypassword
 ```
 
-_See code: [lib/commands/adp/auth/soap/login.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/auth/soap/login.js)_
+_See code: [lib/commands/adp/auth/soap/login.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/auth/soap/login.js)_
 
 ## `sfdx adp:config:show [-g] [-l] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -157,7 +157,7 @@ EXAMPLES
   sfdx adp:config:show -l
 ```
 
-_See code: [lib/commands/adp/config/show.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/config/show.js)_
+_See code: [lib/commands/adp/config/show.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/config/show.js)_
 
 ## `sfdx adp:data:run [-c <string>] [-p <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -194,7 +194,7 @@ EXAMPLES
            // Runs job without user interaction
 ```
 
-_See code: [lib/commands/adp/data/run.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/data/run.js)_
+_See code: [lib/commands/adp/data/run.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/data/run.js)_
 
 ## `sfdx adp:package:install [-a] [-b Latest|Released] [--noprompt] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -230,7 +230,7 @@ EXAMPLES
   sfdx adp:package:install -u xfrom1 -l
 ```
 
-_See code: [lib/commands/adp/package/install.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/install.js)_
+_See code: [lib/commands/adp/package/install.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/package/install.js)_
 
 ## `sfdx adp:package:installed:list [-a] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -260,7 +260,7 @@ EXAMPLE
            // Lists the dependencies and the install status of each for the specified target username
 ```
 
-_See code: [lib/commands/adp/package/installed/list.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/installed/list.js)_
+_See code: [lib/commands/adp/package/installed/list.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/package/installed/list.js)_
 
 ## `sfdx adp:package:list [-a] [-b Latest|Released] [-v] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -297,7 +297,7 @@ EXAMPLES
            // Lists the packages belonging to the specified branch
 ```
 
-_See code: [lib/commands/adp/package/list.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/list.js)_
+_See code: [lib/commands/adp/package/list.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/package/list.js)_
 
 ## `sfdx adp:package:retrieve -p <string> [-q] [-t <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -340,7 +340,7 @@ EXAMPLES
          // performs the retrieve-unzip-convert in Quiet mode, i.e without feedback
 ```
 
-_See code: [lib/commands/adp/package/retrieve.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/retrieve.js)_
+_See code: [lib/commands/adp/package/retrieve.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/package/retrieve.js)_
 
 ## `sfdx adp:package:retrieve:postdestruct [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -371,7 +371,7 @@ EXAMPLES
            // Retrieves the "postdestruct" package from the org having username/alias "myalias"
 ```
 
-_See code: [lib/commands/adp/package/retrieve/postdestruct.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/retrieve/postdestruct.js)_
+_See code: [lib/commands/adp/package/retrieve/postdestruct.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/package/retrieve/postdestruct.js)_
 
 ## `sfdx adp:package:retrieve:predestruct [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -402,7 +402,7 @@ EXAMPLES
            // Retrieves the "predestruct" package from the org having username/alias "myalias"
 ```
 
-_See code: [lib/commands/adp/package/retrieve/predestruct.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/retrieve/predestruct.js)_
+_See code: [lib/commands/adp/package/retrieve/predestruct.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/package/retrieve/predestruct.js)_
 
 ## `sfdx adp:package:uninstall [--noprompt] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -433,7 +433,7 @@ EXAMPLES
   sfdx adp:package:uninstall --noprompt
 ```
 
-_See code: [lib/commands/adp/package/uninstall.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/package/uninstall.js)_
+_See code: [lib/commands/adp/package/uninstall.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/package/uninstall.js)_
 
 ## `sfdx adp:rest:query -q <string> -a <string> -e <string> [-m <number>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -465,7 +465,7 @@ EXAMPLES
   sfdx adp:rest:query -e https://myinstance.com -a myaccesstoken -q "SELECT Id, Name FROM Account limit 5" -m 100
 ```
 
-_See code: [lib/commands/adp/rest/query.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/rest/query.js)_
+_See code: [lib/commands/adp/rest/query.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/rest/query.js)_
 
 ## `sfdx adp:rest:upsert -o <string> -t <string> -x <string> -a <string> -e <string> [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -500,7 +500,7 @@ EXAMPLE
   -a myaccesstoken
 ```
 
-_See code: [lib/commands/adp/rest/upsert.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/rest/upsert.js)_
+_See code: [lib/commands/adp/rest/upsert.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/rest/upsert.js)_
 
 ## `sfdx adp:shell:run [-f <string>] [-a <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -533,7 +533,7 @@ EXAMPLES
            // Runs script with parameters
 ```
 
-_See code: [lib/commands/adp/shell/run.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/shell/run.js)_
+_See code: [lib/commands/adp/shell/run.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/shell/run.js)_
 
 ## `sfdx adp:shell:runjar -j <string> [--classpath <string>] [-a <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -571,7 +571,7 @@ EXAMPLES
            // Passing 2 arguments when one or more contains spaces
 ```
 
-_See code: [lib/commands/adp/shell/runjar.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/shell/runjar.js)_
+_See code: [lib/commands/adp/shell/runjar.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/shell/runjar.js)_
 
 ## `sfdx adp:source:deploy [-b] [-c] [--noanonymous] [--nodestructives] [--nomain] [-l <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -630,7 +630,7 @@ EXAMPLES
            // Excludes pre and post destructive metadata (not passed to override)
 ```
 
-_See code: [lib/commands/adp/source/deploy.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/source/deploy.js)_
+_See code: [lib/commands/adp/source/deploy.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/source/deploy.js)_
 
 ## `sfdx adp:source:destruct [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -658,7 +658,7 @@ EXAMPLE
            // Generates a destructiveChanges.xml file for metadata deletions on the tracked org
 ```
 
-_See code: [lib/commands/adp/source/destruct.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/source/destruct.js)_
+_See code: [lib/commands/adp/source/destruct.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/source/destruct.js)_
 
 ## `sfdx adp:source:destructive:prepare -d <string> [-f <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -686,7 +686,7 @@ EXAMPLE
   -d.
 ```
 
-_See code: [lib/commands/adp/source/destructive/prepare.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/source/destructive/prepare.js)_
+_See code: [lib/commands/adp/source/destructive/prepare.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/source/destructive/prepare.js)_
 
 ## `sfdx adp:source:prepare [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -707,7 +707,7 @@ EXAMPLE
            // Transforms the source under force-app as configured in the project plugin-config.json
 ```
 
-_See code: [lib/commands/adp/source/prepare.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/source/prepare.js)_
+_See code: [lib/commands/adp/source/prepare.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/source/prepare.js)_
 
 ## `sfdx adp:tooling:query -q <string> -u <string> -p <string> [-m <number>] [-r <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -738,7 +738,7 @@ EXAMPLES
   sfdx adp:tooling:query -r https://test.salesforce.com -u USERNAME -p PASSWORD -q "SELECT id FROM SandboxInfo" -m 100
 ```
 
-_See code: [lib/commands/adp/tooling/query.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/tooling/query.js)_
+_See code: [lib/commands/adp/tooling/query.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/tooling/query.js)_
 
 ## `sfdx adp:tooling:update -o <string> -t <string> -a <string> -e <string> [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
 
@@ -770,7 +770,7 @@ EXAMPLE
   true}' -e https://myinstance.com -a myaccesstoken
 ```
 
-_See code: [lib/commands/adp/tooling/update.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.5/lib/commands/adp/tooling/update.js)_
+_See code: [lib/commands/adp/tooling/update.js](https://github.com/americanexpress/sfdx-cli-plugin/blob/v0.0.6/lib/commands/adp/tooling/update.js)_
 <!-- commandsstop -->
 <!-- debugging-your-plugin -->
 # Debugging your plugin
